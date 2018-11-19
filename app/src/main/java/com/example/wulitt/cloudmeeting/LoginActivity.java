@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
-    TextView forget,register;
+    TextView forget;
     EditText userCode,password;
     Button login;
     SharedPreferences sp;
@@ -35,14 +35,12 @@ public class LoginActivity extends AppCompatActivity {
         password=findViewById(R.id.password);
         login=findViewById(R.id.login);
         forget=findViewById(R.id.forget);
-        register=findViewById(R.id.register);
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String user=userCode.getText().toString();
                 String pwd=password.getText().toString();
-                Toast.makeText(LoginActivity.this,user+","+pwd,Toast.LENGTH_SHORT).show();
+//                Toast.makeText(LoginActivity.this,user+","+pwd,Toast.LENGTH_SHORT).show();
                 /*后期添加与数据库的对比*/
                 if (user.equals("123456")&&pwd.equals("123456")){
                     /*如果登陆成功，将用户名保存好，并再下次打开app时会主动跳转到主界面*/
@@ -70,12 +68,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }

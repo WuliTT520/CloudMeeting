@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="88px"
+        android:layout_height="44dp"
         android:background="@color/colorPrimary"
         android:orientation="horizontal">
 
@@ -24,7 +24,7 @@
             android:text="登录"
             android:textAlignment="center"
             android:textColor="@color/light"
-            android:textSize="36px" />
+            android:textSize="18dp" />
 
     </LinearLayout>
 
@@ -34,14 +34,15 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingLeft="30px"
-        android:paddingRight="30px">
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
         <EditText
             android:id="@+id/userCode"
             android:layout_width="match_parent"
-            android:layout_height="100px"
-            android:layout_marginTop="20px"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/line_bottom"
             android:ems="10"
             android:hint="用户名"
             android:inputType="textPersonName"
@@ -50,8 +51,9 @@
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
-            android:layout_height="100px"
-            android:layout_marginTop="20px"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/line_bottom"
             android:ems="10"
             android:hint="密码"
             android:inputType="textPassword"
@@ -61,16 +63,16 @@
             android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20px"
+            android:layout_marginTop="15dp"
             android:background="@drawable/common_button"
             android:text="登录"
             android:textColor="@color/light"
-            android:textSize="36px" />
+            android:textSize="18dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30px"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <TextView
@@ -79,21 +81,8 @@
                 android:layout_height="wrap_content"
                 android:text="忘记密码？"
                 android:textColor="@color/text"
-                android:textSize="28px" />
+                android:textSize="14dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="注册"
-                android:textAlignment="viewEnd"
-                android:textColor="@color/text"
-                android:textSize="28px" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

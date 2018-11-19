@@ -20,7 +20,6 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".ForgetActivity" />
-        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>
