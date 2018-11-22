@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".WelcomeActivity">
+    tools:context=".activity.WelcomeActivity">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -27,7 +27,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="112dp"
         android:layout_marginEnd="7dp"
-        android:text="欢迎使用会议管理系统"
+        android:text="欢迎使用智能会议管理系统"
         android:textAlignment="center"
         android:textColor="@color/light"
         android:textSize="18dp"

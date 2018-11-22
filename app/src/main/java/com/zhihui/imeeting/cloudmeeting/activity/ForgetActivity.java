@@ -1,7 +1,9 @@
-package com.example.wulitt.cloudmeeting;
+package com.zhihui.imeeting.cloudmeeting.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.zhihui.imeeting.cloudmeeting.R;
 
 public class ForgetActivity extends AppCompatActivity {
 

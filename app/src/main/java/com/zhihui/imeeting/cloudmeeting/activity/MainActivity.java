@@ -1,4 +1,4 @@
-package com.example.wulitt.cloudmeeting;
+package com.zhihui.imeeting.cloudmeeting.activity;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -9,6 +9,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.zhihui.imeeting.cloudmeeting.R;
 
 public class MainActivity extends AppCompatActivity {
     FrameLayout show;

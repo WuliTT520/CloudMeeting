@@ -1,4 +1,4 @@
-package com.example.wulitt.cloudmeeting;
+package com.zhihui.imeeting.cloudmeeting.activity;
 
 
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zhihui.imeeting.cloudmeeting.R;
 
 /**
  * A simple {@link Fragment} subclass.

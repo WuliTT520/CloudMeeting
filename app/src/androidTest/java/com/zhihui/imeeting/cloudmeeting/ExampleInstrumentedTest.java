@@ -1,4 +1,4 @@
-package com.example.wulitt.cloudmeeting;
+package com.zhihui.imeeting.cloudmeeting;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.wulitt.cloudmeeting", appContext.getPackageName());
+        assertEquals("com.zhihui.imeeting.cloudmeeting", appContext.getPackageName());
     }
 }

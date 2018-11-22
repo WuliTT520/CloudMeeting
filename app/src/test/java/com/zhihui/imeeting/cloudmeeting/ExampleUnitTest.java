@@ -1,4 +1,4 @@
-package com.example.wulitt.cloudmeeting;
+package com.zhihui.imeeting.cloudmeeting;
 
 import org.junit.Test;
 
