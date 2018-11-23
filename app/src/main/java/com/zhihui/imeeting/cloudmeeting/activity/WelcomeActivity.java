@@ -55,7 +55,6 @@ public class WelcomeActivity extends AppCompatActivity {
     void activeEngine(View view) {
         if (!checkPermissions(NEEDED_PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, NEEDED_PERMISSIONS, ACTION_REQUEST_PERMISSIONS);
-            return;
         }
         FaceEngine faceEngine = new FaceEngine();
         int errorCode = faceEngine.active(this, Constants.ArcFace_APP_ID, Constants.ArcFace_SDK_KEY);
