@@ -8,6 +8,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.TextureView;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.arcsoft.face.ErrorInfo;
 import com.arcsoft.face.FaceEngine;
@@ -16,7 +19,11 @@ import com.zhihui.imeeting.cloudmeeting.R;
 
 public class FaceIDActivity extends AppCompatActivity {
 
-    private static final String TAG = "MineFragment";
+    public Button ok;
+    public ImageView fanhui;
+    public TextureView face;
+
+    private static final String TAG = "FaceIDActivity";
     FaceEngine faceEngine = null;
     static int errorCode = -1;
 
