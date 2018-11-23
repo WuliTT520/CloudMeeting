@@ -1,7 +1,12 @@
 package com.zhihui.imeeting.cloudmeeting.activity;
 
+import android.Manifest;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,14 +14,20 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.arcsoft.face.ErrorInfo;
+import com.arcsoft.face.FaceEngine;
 import com.zhihui.imeeting.cloudmeeting.R;
+import com.zhihui.imeeting.cloudmeeting.common.Constants;
 
 public class MainActivity extends AppCompatActivity {
     FrameLayout show;
     LinearLayout home,schedule,add,news,mine;
     ImageView home_pic,schedule_pic,add_pic,news_pic,mine_pic;
     TextView home_text,schedule_text,add_text,news_text,mine_text;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,4 +159,5 @@ public class MainActivity extends AppCompatActivity {
             mine_text.setTextColor(getColor(R.color.text));
         }
     }
+
 }
