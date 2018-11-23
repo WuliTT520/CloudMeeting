@@ -25,7 +25,10 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        //激活引擎
         activeEngine(null);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -44,6 +47,26 @@ public class WelcomeActivity extends AppCompatActivity {
     private static final String[] NEEDED_PERMISSIONS = new String[]{
             Manifest.permission.READ_PHONE_STATE
     };
+
+
+    /**
+     * 激活引擎
+     */
+    void activeEngine(View view) {
+        if (!checkPermissions(NEEDED_PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, NEEDED_PERMISSIONS, ACTION_REQUEST_PERMISSIONS);
+            return;
+        }
+        FaceEngine faceEngine = new FaceEngine();
+        int errorCode = faceEngine.active(this, Constants.ArcFace_APP_ID, Constants.ArcFace_SDK_KEY);
+        if(errorCode == ErrorInfo.MOK) {
+            showToast("SDK激活成功");
+        } else if(errorCode == ErrorInfo.MERR_ASF_ALREADY_ACTIVATED) {
+            showToast("SDK已激活");
+        } else {
+            showToast("激活失败, errorCode: " + errorCode);
+        }
+    }
 
     /**
      * 检查权限是否获取
@@ -73,28 +96,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 activeEngine(null);
             } else {
                 showToast("未授权权限");
-                Log.i("123", "没权限");
             }
-        }
-    }
-
-    /**
-     * 激活引擎
-     */
-    void activeEngine(View view) {
-        if (!checkPermissions(NEEDED_PERMISSIONS)) {
-            ActivityCompat.requestPermissions(this, NEEDED_PERMISSIONS, ACTION_REQUEST_PERMISSIONS);
-            return;
-        }
-        FaceEngine faceEngine = new FaceEngine();
-        int errorCode = faceEngine.active(this, Constants.ArcFace_APP_ID, Constants.ArcFace_SDK_KEY);
-        if(errorCode == ErrorInfo.MOK) {
-            showToast("SDK激活成功");
-            Log.i("12", "success");
-        } else if(errorCode == ErrorInfo.MERR_ASF_ALREADY_ACTIVATED) {
-            showToast("SDK已激活");
-        } else {
-            showToast("激活失败, errorCode: " + errorCode);
         }
     }
 
