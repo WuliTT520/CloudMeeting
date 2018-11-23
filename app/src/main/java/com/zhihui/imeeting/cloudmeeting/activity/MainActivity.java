@@ -1,16 +1,26 @@
 package com.zhihui.imeeting.cloudmeeting.activity;
 
+import android.Manifest;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.arcsoft.face.ErrorInfo;
+import com.arcsoft.face.FaceEngine;
 import com.zhihui.imeeting.cloudmeeting.R;
+import com.zhihui.imeeting.cloudmeeting.common.Constants;
 
 public class MainActivity extends AppCompatActivity {
     FrameLayout show;
@@ -18,11 +28,20 @@ public class MainActivity extends AppCompatActivity {
     ImageView home_pic,schedule_pic,add_pic,news_pic,mine_pic;
     TextView home_text,schedule_text,add_text,news_text,mine_text;
 
+    /**
+     * 所需权限
+     */
+    private static final int ACTION_REQUEST_PERMISSIONS = 0x001;
+    private static final String[] NEEDED_PERMISSIONS = new String[]{
+            Manifest.permission.READ_PHONE_STATE
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        activeEngine();
         setListener();
     }
     public void init(){
@@ -146,6 +165,72 @@ public class MainActivity extends AppCompatActivity {
         }else{
             mine_pic.setImageResource(R.drawable.main_mine_pt);
             mine_text.setTextColor(getColor(R.color.text));
+        }
+    }
+
+    /**
+     * 检查权限是否获取
+     * @param neededPermissions
+     * @return
+     */
+    private boolean checkPermissions(String[] neededPermissions) {
+        if (neededPermissions == null || neededPermissions.length == 0) {
+            return true;
+        }
+        boolean allGranted = true;
+        for (String neededPermission : neededPermissions) {
+            allGranted &= ContextCompat.checkSelfPermission(this, neededPermission) == PackageManager.PERMISSION_GRANTED;
+        }
+        return allGranted;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == ACTION_REQUEST_PERMISSIONS) {
+            boolean isAllGranted = true;
+            for (int grantResult : grantResults) {
+                isAllGranted &= (grantResult == PackageManager.PERMISSION_GRANTED);
+            }
+            if (isAllGranted) {
+                activeEngine();
+            } else {
+                showToast("未授权权限");
+            }
+        }
+    }
+
+    /**
+     * 激活引擎
+     */
+    void activeEngine() {
+        if (!checkPermissions(NEEDED_PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, NEEDED_PERMISSIONS, ACTION_REQUEST_PERMISSIONS);
+            Log.i("j", "进入激活引擎方法");
+            return;
+        }
+        FaceEngine faceEngine = new FaceEngine();
+        int errorCode = faceEngine.active(this, Constants.ArcFace_APP_ID, Constants.ArcFace_SDK_KEY);
+        if(errorCode == ErrorInfo.MOK) {
+            showToast("SDK激活成功");
+        } else if(errorCode == ErrorInfo.MERR_ASF_ALREADY_ACTIVATED) {
+            showToast("SDK已激活");
+        } else {
+            showToast("激活失败, errorCode: " + errorCode);
+        }
+    }
+
+    /**
+     * 显示信息
+     */
+    private Toast toast = null;
+    private void showToast(String s) {
+        if (toast == null) {
+            toast = Toast.makeText(this, s, Toast.LENGTH_SHORT);
+            toast.show();
+        } else {
+            toast.setText(s);
+            toast.show();
         }
     }
 }
