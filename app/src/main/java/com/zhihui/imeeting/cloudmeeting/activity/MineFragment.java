@@ -1,22 +1,11 @@
 package com.zhihui.imeeting.cloudmeeting.activity;
 
-
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.arcsoft.face.ErrorInfo;
-import com.arcsoft.face.FaceEngine;
-import com.arcsoft.face.VersionInfo;
 import com.zhihui.imeeting.cloudmeeting.R;
 
 /**

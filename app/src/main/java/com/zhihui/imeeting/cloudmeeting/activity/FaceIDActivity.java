@@ -32,6 +32,7 @@ public class FaceIDActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initEngine();
         setContentView(R.layout.activity_face_id);
 
     }
@@ -109,5 +110,5 @@ public class FaceIDActivity extends AppCompatActivity {
             }
         }
     }
-    
+
 }

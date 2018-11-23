@@ -20,6 +20,15 @@ import com.zhihui.imeeting.cloudmeeting.common.Constants;
 
 public class WelcomeActivity extends AppCompatActivity {
 
+    private static final String TAG = "WelcomeActivity";
+
+    /**
+     * 所需权限
+     */
+    private static final int ACTION_REQUEST_PERMISSIONS = 0x001;
+    private static final String[] NEEDED_PERMISSIONS = new String[]{
+            Manifest.permission.READ_PHONE_STATE
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +49,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * 所需权限
-     */
-    private static final int ACTION_REQUEST_PERMISSIONS = 0x001;
-    private static final String[] NEEDED_PERMISSIONS = new String[]{
-            Manifest.permission.READ_PHONE_STATE
-    };
-
 
     /**
      * 激活引擎
@@ -59,11 +60,11 @@ public class WelcomeActivity extends AppCompatActivity {
         FaceEngine faceEngine = new FaceEngine();
         int errorCode = faceEngine.active(this, Constants.ArcFace_APP_ID, Constants.ArcFace_SDK_KEY);
         if(errorCode == ErrorInfo.MOK) {
-            showToast("SDK激活成功");
+            Log.i(TAG, "SDK激活成功");
         } else if(errorCode == ErrorInfo.MERR_ASF_ALREADY_ACTIVATED) {
-            showToast("SDK已激活");
+            Log.i(TAG, "SDK已激活");
         } else {
-            showToast("激活失败, errorCode: " + errorCode);
+            Log.i(TAG, "SDK激活失败, errorCode: "+errorCode);
         }
     }
 
@@ -94,22 +95,9 @@ public class WelcomeActivity extends AppCompatActivity {
             if (isAllGranted) {
                 activeEngine(null);
             } else {
-                showToast("未授权权限");
+                Log.i(TAG, "未授权权限");
             }
         }
     }
 
-    /**
-     * 显示信息
-     */
-    private Toast toast = null;
-    private void showToast(String s) {
-        if (toast == null) {
-            toast = Toast.makeText(this, s, Toast.LENGTH_SHORT);
-            toast.show();
-        } else {
-            toast.setText(s);
-            toast.show();
-        }
-    }
 }
