@@ -46,7 +46,7 @@ public class FaceIDActivity extends AppCompatActivity {
         }
         faceEngine = new FaceEngine();
         /**
-         * 初始化引擎
+         * faceEngine.init()初始化引擎
          * @param context上下文对象
          * @param 视频模式检测
          * @param 人脸检测方向为多方向检测
