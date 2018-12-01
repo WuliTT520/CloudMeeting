@@ -9,4 +9,7 @@ public class MyURL {
     public String pwdCode(){
         return URL+"/pwdCode";
     }
+    public String forgetPwd(){
+        return URL+"/forgetPwd";
+    }
 }

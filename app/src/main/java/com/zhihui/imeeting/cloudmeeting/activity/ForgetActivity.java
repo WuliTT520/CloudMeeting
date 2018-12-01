@@ -30,7 +30,7 @@ public class ForgetActivity extends AppCompatActivity {
     public ImageView fanhui;
     public EditText phoneNum,yzm;
     public Button next,getyzm;
-    public String yzm_true;
+    public String yzm_true,phone;
     Handler handler;
     Message msg;
     @Override
@@ -85,6 +85,7 @@ public class ForgetActivity extends AppCompatActivity {
                 String user_yzm=yzm.getText().toString();
                 if (user_yzm.equals(yzm_true)){
                     Intent intent=new Intent(ForgetActivity.this,SetPasswordActivity.class);
+                    intent.putExtra("phone",phone);
                     startActivity(intent);
                 }else{
                     Toast.makeText(ForgetActivity.this,"验证码错误",Toast.LENGTH_SHORT).show();
@@ -96,7 +97,7 @@ public class ForgetActivity extends AppCompatActivity {
         getyzm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phone =phoneNum.getText().toString();
+                phone =phoneNum.getText().toString();
                 if (phone!=""&&phone.length()==11){
                     final OkHttpClient client = new OkHttpClient();
                     RequestBody form=new FormBody.Builder()

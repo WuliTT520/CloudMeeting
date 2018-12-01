@@ -138,20 +138,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
-//                if (flag){
-//                    /*如果登陆成功，将用户名保存好，并再下次打开app时会主动跳转到主界面*/
-//                    editor = sp.edit();
-//                    editor.putString("userCode",user);
-//                    editor.putBoolean("isLogin",true);
-//                    editor.commit();
-//
-//                    Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-//                    startActivity(intent);
-//                    /*跳转以后将登陆页面关闭，防止点击返回键返回登陆页面*/
-//                    LoginActivity.this.finish();
-//                }else {
-//                    Toast.makeText(LoginActivity.this,"用户名或密码输入错误",Toast.LENGTH_SHORT).show();
-//                }
 
             }
         });
