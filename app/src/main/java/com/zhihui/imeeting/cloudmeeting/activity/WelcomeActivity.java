@@ -1,7 +1,9 @@
 package com.zhihui.imeeting.cloudmeeting.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -21,7 +23,7 @@ import com.zhihui.imeeting.cloudmeeting.common.Constants;
 public class WelcomeActivity extends AppCompatActivity {
 
     private static final String TAG = "WelcomeActivity";
-
+    SharedPreferences sp;
     /**
      * 所需权限
      */
@@ -34,16 +36,22 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
+        sp=this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         //激活引擎
-        activeEngine(null);
+//        activeEngine(null);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent=new Intent(WelcomeActivity.this,LoginActivity.class);
-                startActivity(intent);
-                WelcomeActivity.this.finish();
+                if(sp.getBoolean("isLogin",false)){
+                    Intent intent=new Intent(WelcomeActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    WelcomeActivity.this.finish();
+                }else{
+                    Intent intent=new Intent(WelcomeActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                    WelcomeActivity.this.finish();
+                }
             }
         },1000*3);
 

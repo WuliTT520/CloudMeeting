@@ -26,7 +26,8 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.ForgetActivity" />
         <activity android:name=".activity.SetPasswordActivity" />
-        <activity android:name=".activity.FaceIDActivity"></activity>
+        <activity android:name=".activity.FaceIDActivity" />
+        <activity android:name=".activity.SetingActivity"></activity>
     </application>
 
 </manifest>
