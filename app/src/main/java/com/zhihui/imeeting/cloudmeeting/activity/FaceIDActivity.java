@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.TextureView;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -27,6 +26,7 @@ import com.zhihui.imeeting.cloudmeeting.R;
 import com.zhihui.imeeting.cloudmeeting.common.Constants;
 import com.zhihui.imeeting.cloudmeeting.util.camera.CameraHelper;
 import com.zhihui.imeeting.cloudmeeting.util.camera.CameraListener;
+import com.zhihui.imeeting.cloudmeeting.widget.FaceRectView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +40,13 @@ public class FaceIDActivity extends AppCompatActivity {
     private static final String TAG = "FaceIDActivity";
     FaceEngine faceEngine = null;
     static int errorCode = -1;
+
+    private CameraHelper cameraHelper;
+    private Camera.Size previewSize;
+    private int processMask = FaceEngine.ASF_AGE | FaceEngine.ASF_FACE3DANGLE | FaceEngine.ASF_GENDER | FaceEngine.ASF_LIVENESS;
+    private Integer cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
+    private TextureView previewView ;//相机预览显示控件
+    private FaceRectView faceRectView;//人脸侦测帮助框
 
     /**
      * 所需的所有权限信息
@@ -56,6 +63,7 @@ public class FaceIDActivity extends AppCompatActivity {
         setContentView(R.layout.activity_face_id);
 
         previewView=findViewById(R.id.face);
+        //faceRectView = findViewById(R.id.face_rect_view);
         if(!checkPermissions(NEEDED_PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, NEEDED_PERMISSIONS, ACTION_REQUEST_PERMISSIONS);
         } else {
@@ -90,7 +98,8 @@ public class FaceIDActivity extends AppCompatActivity {
                 isAllGranted &= (grantResult == PackageManager.PERMISSION_GRANTED);
             }
             if (isAllGranted) {
-                //initEngine();
+                initEngine();
+                initCamera();
             } else {
                 Log.i(TAG, "未授权权限");
             }
@@ -140,11 +149,7 @@ public class FaceIDActivity extends AppCompatActivity {
     }
 
 
-    private CameraHelper cameraHelper;
-    private Camera.Size previewSize;
-    private int processMask = FaceEngine.ASF_AGE | FaceEngine.ASF_FACE3DANGLE | FaceEngine.ASF_GENDER | FaceEngine.ASF_LIVENESS;
-    private Integer cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
-    private TextureView previewView ;//相机预览显示控件
+
 
     private void initCamera() {
         DisplayMetrics metrics = new DisplayMetrics();
