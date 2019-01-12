@@ -24,6 +24,7 @@ import com.arcsoft.face.GenderInfo;
 import com.arcsoft.face.LivenessInfo;
 import com.arcsoft.face.VersionInfo;
 import com.zhihui.imeeting.cloudmeeting.R;
+import com.zhihui.imeeting.cloudmeeting.common.Constants;
 import com.zhihui.imeeting.cloudmeeting.util.camera.CameraHelper;
 import com.zhihui.imeeting.cloudmeeting.util.camera.CameraListener;
 
@@ -52,51 +53,14 @@ public class FaceIDActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initEngine();
-        setContentView(R.layout.activity_face_id);
-
-    }
-
-    /**
-     * 初始化引擎
-     */
-    private void initEngine() {
         if(!checkPermissions(NEEDED_PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, NEEDED_PERMISSIONS, ACTION_REQUEST_PERMISSIONS);
+        } else {
+            initEngine();
+            initCamera();
         }
-        faceEngine = new FaceEngine();
-        /**
-         * faceEngine.init()初始化引擎
-         * @param context上下文对象
-         * @param 视频模式检测
-         * @param 人脸检测方向为多方向检测
-         * @param 人脸相对于所在图片的长边的占比 [2, 16]
-         * @param 引擎最多能检测出的人脸数 [1, 50]
-         * @param 引擎功能:人脸检测、人脸识别、年龄检测、人脸三维角度检测、性别检测、活体检测
-         */
-        int errorCode = faceEngine.init(this.getApplicationContext(), FaceEngine.ASF_DETECT_MODE_VIDEO,
-                FaceEngine.ASF_OP_0_HIGHER_EXT,
-                16, 1,
-                FaceEngine.ASF_FACE_DETECT | FaceEngine.ASF_AGE | FaceEngine.ASF_FACE3DANGLE | FaceEngine.ASF_GENDER | FaceEngine.ASF_LIVENESS);
-        //获取版本信息
-        VersionInfo versionInfo = new VersionInfo();
-        faceEngine.getVersion(versionInfo);
+        setContentView(R.layout.activity_face_id);
 
-        //deBug信息
-        Log.i(TAG, "初始化引擎成功!  errorCode: " + errorCode + "  引擎版本号:" + versionInfo);
-        if (errorCode != ErrorInfo.MOK) {
-            Log.i(TAG, "初始化引擎失败");
-        }
-    }
-
-    /**
-     * 销毁引擎
-     */
-    private void unInitEngine() {
-        if (errorCode == ErrorInfo.MOK) {
-            errorCode = faceEngine.unInit();
-            Log.i(TAG, "销毁引擎!  errorCode: " + errorCode);
-        }
     }
 
     /**
@@ -130,6 +94,49 @@ public class FaceIDActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * 初始化引擎
+     */
+    private void initEngine() {
+        faceEngine = new FaceEngine();
+        //激活引擎
+        int activeCode = faceEngine.active(this, Constants.ArcFace_APP_ID, Constants.ArcFace_SDK_KEY);
+
+        /**
+         * faceEngine.init()初始化引擎
+         * @param context上下文对象
+         * @param 视频模式检测
+         * @param 人脸检测方向为多方向检测
+         * @param 人脸相对于所在图片的长边的占比 [2, 16]
+         * @param 引擎最多能检测出的人脸数 [1, 50]
+         * @param 引擎功能:人脸检测、人脸识别、年龄检测、人脸三维角度检测、性别检测、活体检测
+         */
+        int errorCode = faceEngine.init(this.getApplicationContext(), FaceEngine.ASF_DETECT_MODE_VIDEO,
+                FaceEngine.ASF_OP_0_HIGHER_EXT,
+                16, 1,
+                FaceEngine.ASF_FACE_DETECT | FaceEngine.ASF_AGE | FaceEngine.ASF_FACE3DANGLE | FaceEngine.ASF_GENDER | FaceEngine.ASF_LIVENESS);
+        //获取版本信息
+        VersionInfo versionInfo = new VersionInfo();
+        faceEngine.getVersion(versionInfo);
+        if (errorCode != ErrorInfo.MOK) {
+            Log.i(TAG, "初始化引擎失败");
+        } else {
+            //deBug信息
+            Log.i(TAG, "初始化引擎成功!  errorCode: " + errorCode + "  引擎版本号:" + versionInfo);
+        }
+    }
+
+    /**
+     * 销毁引擎
+     */
+    private void unInitEngine() {
+        if (errorCode == ErrorInfo.MOK) {
+            errorCode = faceEngine.unInit();
+            Log.i(TAG, "销毁引擎!  errorCode: " + errorCode);
+        }
+    }
+
 
     private CameraHelper cameraHelper;
     private Camera.Size previewSize;
