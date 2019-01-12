@@ -100,7 +100,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/news_pic"
+                android:id="@+id/new_pic"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
                 android:layout_marginTop="6dp"

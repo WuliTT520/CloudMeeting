@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         home_pic=findViewById(R.id.home_pic);
         schedule_pic=findViewById(R.id.schedule_pic);
         add_pic=findViewById(R.id.add_pic);
-        news_pic=findViewById(R.id.news_pic);
+        news_pic=findViewById(R.id.new_pic);
         mine_pic=findViewById(R.id.mine_pic);
 
         home_text=findViewById(R.id.home_text);
