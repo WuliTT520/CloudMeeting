@@ -2,6 +2,7 @@ package com.zhihui.imeeting.cloudmeeting.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.hardware.Camera;
 import android.media.FaceDetector;
 import android.support.annotation.NonNull;
@@ -153,6 +154,7 @@ public class FaceIDActivity extends AppCompatActivity {
 
 
     private FaceFeature mainFeature;
+    private byte[] by;
     private void initCamera() {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -174,19 +176,27 @@ public class FaceIDActivity extends AppCompatActivity {
                     faceRectView.clearFaceInfo();
                 }
                 */
+
                 List<FaceInfo> faceInfoList = new ArrayList<>();
                 int code = faceEngine.detectFaces(nv21, previewSize.width, previewSize.height, FaceEngine.CP_PAF_NV21, faceInfoList);
-                Log.i("人脸数", "人脸数: "+faceInfoList.size());
                 if (code == ErrorInfo.MOK && faceInfoList.size() > 0) {
                     code = faceEngine.process(nv21, previewSize.width, previewSize.height, FaceEngine.CP_PAF_NV21, faceInfoList, processMask);
+                    Rect rect = faceInfoList.get(0).getRect();
+                    int width = Math.abs(rect.left-rect.right);
+                    int height = Math.abs(rect.top-rect.bottom);
+                    Log.i("code", "code: " + code);
                     mainFeature = new FaceFeature();
-                    int codeFeature = faceEngine.extractFaceFeature(nv21, previewSize.width, previewSize.height, FaceEngine.CP_PAF_NV21, faceInfoList.get(0), mainFeature);
-                    Log.i("特征值Code", "codeFeature: "+codeFeature);
-                    if(codeFeature == ErrorInfo.MOK)
-                        byte[] by = mainFeature.getFeatureData();
-                    if (code != ErrorInfo.MOK) {
-                        return;
+                    Log.i("faceInfoList.get(0)", "faceInfoList.get(0): "+faceInfoList.get(0).toString());
+                    int res = faceEngine.extractFaceFeature(nv21, previewSize.width, previewSize.height, FaceEngine.CP_PAF_NV21, faceInfoList.get(0), mainFeature);
+                    Log.i("res", "res: " + res);
+                    if (res != ErrorInfo.MOK) {
+                        mainFeature = null;
                     }
+
+
+                    //if (code != ErrorInfo.MOK) {
+                    //    return;
+                    //}
                 }else {
                     return;
                 }
