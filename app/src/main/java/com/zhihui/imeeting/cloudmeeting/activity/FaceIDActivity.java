@@ -142,7 +142,7 @@ public class FaceIDActivity extends AppCompatActivity {
     private Camera.Size previewSize;
     private int processMask = FaceEngine.ASF_AGE | FaceEngine.ASF_FACE3DANGLE | FaceEngine.ASF_GENDER | FaceEngine.ASF_LIVENESS;
     private Integer cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
-    private View previewView;//相机预览显示控件
+    private View previewView = findViewById(R.id.face);//相机预览显示控件
 
     private void initCamera() {
         DisplayMetrics metrics = new DisplayMetrics();
@@ -152,7 +152,7 @@ public class FaceIDActivity extends AppCompatActivity {
             @Override
             public void onCameraOpened(Camera camera, int cameraId, int displayOrientation, boolean isMirror) {
                 Log.i(TAG, "onCameraOpened: " + cameraId + "  " + displayOrientation + " " + isMirror);
-                //previewSize = camera.getParameters().getPreviewSize();
+                previewSize = camera.getParameters().getPreviewSize();
                 /*drawHelper = new DrawHelper(previewSize.width, previewSize.height, previewView.getWidth(), previewView.getHeight(), displayOrientation
                         , cameraId, isMirror);*/
             }
