@@ -118,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             String result = response.body().string();
                             Log.w("success",result);
+                            String sessionId=response.header("Set-Cookie");
                             JSONObject data =new  JSONObject(result);
                             boolean flag=data.getBoolean("status");
                             if (flag){

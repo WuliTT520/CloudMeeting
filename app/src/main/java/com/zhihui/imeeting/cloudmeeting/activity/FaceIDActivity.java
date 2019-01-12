@@ -142,12 +142,12 @@ public class FaceIDActivity extends AppCompatActivity {
     private Camera.Size previewSize;
     private int processMask = FaceEngine.ASF_AGE | FaceEngine.ASF_FACE3DANGLE | FaceEngine.ASF_GENDER | FaceEngine.ASF_LIVENESS;
     private Integer cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
-    private View previewView = findViewById(R.id.face);//相机预览显示控件
+    private TextureView previewView ;//相机预览显示控件
 
     private void initCamera() {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-
+        previewView=findViewById(R.id.face);
         CameraListener cameraListener = new CameraListener() {
             @Override
             public void onCameraOpened(Camera camera, int cameraId, int displayOrientation, boolean isMirror) {
