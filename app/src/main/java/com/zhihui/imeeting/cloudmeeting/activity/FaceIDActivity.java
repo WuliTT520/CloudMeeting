@@ -53,13 +53,15 @@ public class FaceIDActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_face_id);
+
+        previewView=findViewById(R.id.face);
         if(!checkPermissions(NEEDED_PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, NEEDED_PERMISSIONS, ACTION_REQUEST_PERMISSIONS);
         } else {
             initEngine();
             initCamera();
         }
-        setContentView(R.layout.activity_face_id);
 
     }
 
@@ -88,7 +90,7 @@ public class FaceIDActivity extends AppCompatActivity {
                 isAllGranted &= (grantResult == PackageManager.PERMISSION_GRANTED);
             }
             if (isAllGranted) {
-                initEngine();
+                //initEngine();
             } else {
                 Log.i(TAG, "未授权权限");
             }
@@ -147,7 +149,7 @@ public class FaceIDActivity extends AppCompatActivity {
     private void initCamera() {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        previewView=findViewById(R.id.face);
+
         CameraListener cameraListener = new CameraListener() {
             @Override
             public void onCameraOpened(Camera camera, int cameraId, int displayOrientation, boolean isMirror) {
