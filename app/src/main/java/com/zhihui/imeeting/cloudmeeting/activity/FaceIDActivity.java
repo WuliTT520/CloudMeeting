@@ -3,6 +3,7 @@ package com.zhihui.imeeting.cloudmeeting.activity;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.media.FaceDetector;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -18,6 +19,7 @@ import com.arcsoft.face.AgeInfo;
 import com.arcsoft.face.ErrorInfo;
 import com.arcsoft.face.Face3DAngle;
 import com.arcsoft.face.FaceEngine;
+import com.arcsoft.face.FaceFeature;
 import com.arcsoft.face.FaceInfo;
 import com.arcsoft.face.GenderInfo;
 import com.arcsoft.face.LivenessInfo;
@@ -150,7 +152,7 @@ public class FaceIDActivity extends AppCompatActivity {
 
 
 
-
+    private FaceFeature mainFeature;
     private void initCamera() {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -174,28 +176,42 @@ public class FaceIDActivity extends AppCompatActivity {
                 */
                 List<FaceInfo> faceInfoList = new ArrayList<>();
                 int code = faceEngine.detectFaces(nv21, previewSize.width, previewSize.height, FaceEngine.CP_PAF_NV21, faceInfoList);
+                Log.i("人脸数", "人脸数: "+faceInfoList.size());
                 if (code == ErrorInfo.MOK && faceInfoList.size() > 0) {
                     code = faceEngine.process(nv21, previewSize.width, previewSize.height, FaceEngine.CP_PAF_NV21, faceInfoList, processMask);
+                    mainFeature = new FaceFeature();
+                    int codeFeature = faceEngine.extractFaceFeature(nv21, previewSize.width, previewSize.height, FaceEngine.CP_PAF_NV21, faceInfoList.get(0), mainFeature);
+                    Log.i("特征值Code", "codeFeature: "+codeFeature);
+                    if(codeFeature == ErrorInfo.MOK)
+                        byte[] by = mainFeature.getFeatureData();
                     if (code != ErrorInfo.MOK) {
                         return;
                     }
                 }else {
                     return;
                 }
+
+                /*
                 Log.i("人脸侦测", "人脸侦测成功");
                 List<AgeInfo> ageInfoList = new ArrayList<>();
                 List<GenderInfo> genderInfoList = new ArrayList<>();
                 List<Face3DAngle> face3DAngleList = new ArrayList<>();
                 List<LivenessInfo> faceLivenessInfoList = new ArrayList<>();
+
+
                 int ageCode = faceEngine.getAge(ageInfoList);
                 int genderCode = faceEngine.getGender(genderInfoList);
                 int face3DAngleCode = faceEngine.getFace3DAngle(face3DAngleList);
                 int livenessCode = faceEngine.getLiveness(faceLivenessInfoList);
+                Log.i("ageCode: ", "ageCode: "+ageCode);
+                Log.i("年龄: ", "年龄: "+ageInfoList.get(0).getAge());
+
 
                 //有其中一个的错误码不为0，return
                 if ((ageCode | genderCode | face3DAngleCode | livenessCode) != ErrorInfo.MOK) {
                     return;
                 }
+                */
                 /*if (faceRectView != null && drawHelper != null) {
                     List<DrawInfo> drawInfoList = new ArrayList<>();
                     for (int i = 0; i < faceInfoList.size(); i++) {
