@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     Handler handler;
     Message msg;
+    String sessionId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor = sp.edit();
                         editor.putString("userCode",userCode.getText().toString());
                         editor.putBoolean("isLogin",true);
+                        editor.putString("sessionID",sessionId);
                         editor.commit();
 
                         Intent intent=new Intent(LoginActivity.this,MainActivity.class);
@@ -118,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             String result = response.body().string();
                             Log.w("success",result);
-                            String sessionId=response.header("Set-Cookie");
+                            sessionId=response.header("Set-Cookie");
                             JSONObject data =new  JSONObject(result);
                             boolean flag=data.getBoolean("status");
                             if (flag){

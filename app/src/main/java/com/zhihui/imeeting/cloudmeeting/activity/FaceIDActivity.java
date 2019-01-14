@@ -2,10 +2,12 @@ package com.zhihui.imeeting.cloudmeeting.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.hardware.Camera;
 import android.media.FaceDetector;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -33,6 +35,11 @@ import com.zhihui.imeeting.cloudmeeting.util.camera.CameraHelper;
 import com.zhihui.imeeting.cloudmeeting.util.camera.CameraListener;
 import com.zhihui.imeeting.cloudmeeting.widget.FaceRectView;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -196,6 +203,12 @@ public class FaceIDActivity extends AppCompatActivity {
                     Log.i("特征值提取: ", "error:"+extractFaceFeatureCodes);
                     if(extractFaceFeatureCodes == ErrorInfo.MOK) {
                         faceFeatureData = faceFeatures.getFeatureData();
+                        System.out.print("特征值:");
+                        System.out.println(bytesToHex(faceFeatureData));
+                        /*截图功能*/
+//                        Bitmap bitmap=previewView.getBitmap();
+//                        getFile(bitmap);
+//                        System.exit(0);
                         return;
                     }
 
@@ -265,6 +278,37 @@ public class FaceIDActivity extends AppCompatActivity {
                 .cameraListener(cameraListener)
                 .build();
         cameraHelper.init();
+    }
+
+    public static String bytesToHex(byte[] bytes) {
+        StringBuffer sb = new StringBuffer();
+        for(int i = 0; i < bytes.length; i++) {
+            String hex = Integer.toHexString(bytes[i] & 0xFF);
+            if(hex.length() < 2){
+                sb.append(0);
+            }
+            sb.append(hex);
+        }
+        return sb.toString();
+    }
+    public static File getFile(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+        File file = new File(Environment.getExternalStorageDirectory() + "/temp.jpg");
+        try {
+            file.createNewFile();
+            FileOutputStream fos = new FileOutputStream(file);
+            InputStream is = new ByteArrayInputStream(baos.toByteArray());
+            int x = 0;
+            byte[] b = new byte[1024 * 100];
+            while ((x = is.read(b)) != -1) {
+                fos.write(b, 0, x);
+            }
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
     }
 
 }

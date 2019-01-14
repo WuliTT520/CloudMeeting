@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.ScheduleFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".activity.GroupActivity">
 
     <LinearLayout
         android:id="@+id/header"
@@ -20,8 +19,21 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical|center_horizontal"
-            android:text="联系人"
+            android:paddingLeft="47dp"
+            android:text="我的群组"
             android:textColor="@color/light"
             android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/group_set"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/setting" />
     </LinearLayout>
+
+    <ExpandableListView
+        android:id="@+id/groupList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

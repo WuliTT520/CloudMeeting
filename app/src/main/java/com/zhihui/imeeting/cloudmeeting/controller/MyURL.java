@@ -12,4 +12,13 @@ public class MyURL {
     public String forgetPwd(){
         return URL+"/forgetPwd";
     }
+    public String logout(){
+        return URL+"/logout";
+    }
+    public String showUserinfo(){
+        return URL+"/showUserinfo";
+    }
+    public String showUser(){
+        return URL+"/group/showUser";
+    }
 }

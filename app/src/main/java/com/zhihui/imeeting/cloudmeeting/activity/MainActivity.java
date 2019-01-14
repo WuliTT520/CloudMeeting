@@ -3,6 +3,7 @@ package com.zhihui.imeeting.cloudmeeting.activity;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -87,12 +88,14 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeColor(3);
-                FragmentManager manager=getFragmentManager();
-                final FragmentTransaction transaction=manager.beginTransaction();
-                AddFragment addFragment=new AddFragment();
-                transaction.replace(R.id.show,addFragment);
-                transaction.commit();
+//                changeColor(3);
+//                FragmentManager manager=getFragmentManager();
+//                final FragmentTransaction transaction=manager.beginTransaction();
+//                AddFragment addFragment=new AddFragment();
+//                transaction.replace(R.id.show,addFragment);
+//                transaction.commit();
+                Intent intent=new Intent(MainActivity.this, AddActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -130,10 +133,10 @@ public class MainActivity extends AppCompatActivity {
             home_text.setTextColor(getColor(R.color.text));
         }
         if (i==2){
-            schedule_pic.setImageResource(R.drawable.main_schedule_ac);
+            schedule_pic.setImageResource(R.drawable.contacts_ac);
             schedule_text.setTextColor(getColor(R.color.colorPrimary));
         }else{
-            schedule_pic.setImageResource(R.drawable.main_schedule_pt);
+            schedule_pic.setImageResource(R.drawable.contacts_pt);
             schedule_text.setTextColor(getColor(R.color.text));
         }
 

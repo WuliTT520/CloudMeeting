@@ -57,13 +57,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
                 android:layout_marginTop="6dp"
-                app:srcCompat="@drawable/main_schedule_pt" />
+                app:srcCompat="@drawable/contacts_pt" />
 
             <TextView
                 android:id="@+id/schedule_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="日程"
+                android:text="联系人"
                 android:textAlignment="center"
                 android:textSize="10sp" />
         </LinearLayout>

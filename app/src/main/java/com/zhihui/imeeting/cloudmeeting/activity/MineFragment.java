@@ -1,14 +1,36 @@
 package com.zhihui.imeeting.cloudmeeting.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhihui.imeeting.cloudmeeting.R;
+import com.zhihui.imeeting.cloudmeeting.controller.MyURL;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,8 +46,21 @@ public class MineFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private TextView Tname;
+    private TextView Tworknum;
+    private TextView Tresume;
+    private LinearLayout myGroup;
     View view;
     private Button ceshi;
+    private Button logout;
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
+    private static final String TAG="MineFragment";
+    Handler handler;
+    Message msg;
+    String name;
+    String worknum;
+    String resume;
     public MineFragment() {
         // Required empty public constructor
     }
@@ -65,12 +100,39 @@ public class MineFragment extends Fragment {
 //        return inflater.inflate(R.layout.fragment_mine, container, false);
         init();
         setListener();
+        getInfo();
         return view;
     }
 
     public void init(){
         ceshi=view.findViewById(R.id.ceshi);
-
+        logout=view.findViewById(R.id.logout);
+        Tname=view.findViewById(R.id.name);
+        Tworknum=view.findViewById(R.id.workNum);
+        Tresume=view.findViewById(R.id.resume);
+        myGroup=view.findViewById(R.id.myGroup);
+        sp = this.getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch(msg.what){
+                    case 404:
+                        Toast.makeText(getActivity(),"网络异常",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 500:
+                        Toast.makeText(getActivity(),"请求错误",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 100:
+//                        Toast.makeText(getActivity(),name+" "+worknum+" "+resume,Toast.LENGTH_SHORT).show();
+                        Tname.setText(name);
+                        Tworknum.setText("工号："+worknum);
+                        Tresume.setText("简介："+resume);
+                        break;
+                        default:
+                }
+                super.handleMessage(msg);
+            }
+        };
     }
     public void setListener(){
         ceshi.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +140,94 @@ public class MineFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(),FaceIDActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyURL myURL = new MyURL();
+                final OkHttpClient client = new OkHttpClient();
+                final Request request = new Request.Builder()
+                        .addHeader("cookie", sp.getString("sessionID", ""))
+                        .url(myURL.logout())
+                        .build();
+                Call call = client.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+
+                    }
+                });
+
+                editor = sp.edit();
+                editor.putString("sessionID", "");
+                editor.putString("userCode","");
+                editor.putBoolean("isLogin", false);
+                editor.commit();
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+
+        myGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), GroupActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+    public void getInfo(){
+        MyURL url=new MyURL();
+        final OkHttpClient client = new OkHttpClient();
+        final Request request = new Request.Builder()
+                .addHeader("cookie", sp.getString("sessionID", ""))
+                .url(url.showUserinfo())
+                .build();
+
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.w(TAG,"请求失败");
+                msg=Message.obtain();
+                msg.what=404;
+                handler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    String result = response.body().string();
+//                    Log.w(TAG,result);
+                    JSONObject data =new JSONObject(result);
+                    boolean flag=data.getBoolean("status");
+                    if (flag){
+                        JSONObject info=data.getJSONObject("data");
+                        name=info.getString("name");
+                        worknum=info.getString("worknum");
+                        resume=info.getString("resume");
+                        msg=Message.obtain();
+                        msg.what=100;
+                        handler.sendMessage(msg);
+//                        Log.w(TAG,name+" "+worknum+" "+resume);
+                    }else {
+                        msg=Message.obtain();
+                        msg.what=500;
+                        handler.sendMessage(msg);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
             }
         });
     }
