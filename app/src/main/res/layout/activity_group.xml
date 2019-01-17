@@ -14,12 +14,18 @@
         android:background="@color/colorPrimary"
         android:orientation="horizontal">
 
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/back" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical|center_horizontal"
-            android:paddingLeft="47dp"
             android:text="我的群组"
             android:textColor="@color/light"
             android:textSize="18sp" />
@@ -29,11 +35,13 @@
             android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
-            android:src="@drawable/setting" />
+            android:src="@drawable/add_group" />
     </LinearLayout>
 
-    <ExpandableListView
+    <com.baoyz.swipemenulistview.SwipeMenuListView
         android:id="@+id/groupList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:divider="@color/grey" />
+
 </LinearLayout>

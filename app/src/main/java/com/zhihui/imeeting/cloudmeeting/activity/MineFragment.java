@@ -50,6 +50,7 @@ public class MineFragment extends Fragment {
     private TextView Tworknum;
     private TextView Tresume;
     private LinearLayout myGroup;
+    private LinearLayout info;
     View view;
     private Button ceshi;
     private Button logout;
@@ -111,6 +112,7 @@ public class MineFragment extends Fragment {
         Tworknum=view.findViewById(R.id.workNum);
         Tresume=view.findViewById(R.id.resume);
         myGroup=view.findViewById(R.id.myGroup);
+        info=view.findViewById(R.id.info);
         sp = this.getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         handler=new Handler(){
             @Override
@@ -139,6 +141,13 @@ public class MineFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(),FaceIDActivity.class);
+                startActivity(intent);
+            }
+        });
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),UserInfoActivity.class);
                 startActivity(intent);
             }
         });

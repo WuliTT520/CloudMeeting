@@ -29,7 +29,12 @@
         <activity android:name=".activity.FaceIDActivity" />
         <activity android:name=".activity.AddActivity" />
         <activity android:name=".activity.GroupActivity" />
-        <activity android:name=".activity.GroupSetActivity"></activity>
+        <activity android:name=".activity.GroupInfoActivity" />
+        <activity android:name=".activity.GroupAddActivity" />
+        <activity android:name=".activity.GroupSetActivity" />
+        <activity android:name=".activity.UserInfoActivity" />
+        <activity android:name=".activity.SetPhoneActivity" />
+        <activity android:name=".activity.SetResumeActivity"></activity>
     </application>
 
 </manifest>

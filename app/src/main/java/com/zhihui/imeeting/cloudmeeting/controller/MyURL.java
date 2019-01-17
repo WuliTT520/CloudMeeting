@@ -21,4 +21,16 @@ public class MyURL {
     public String showUser(){
         return URL+"/group/showUser";
     }
+    public String showGroup(){
+        return URL+"/group/showGroup";
+    }
+    public String deleteGroup(){
+        return URL+"/group/deleteGroup";
+    }
+    public String showOneGroup(){
+        return URL+"/group/showOneGroup";
+    }
+    public String saveGroup(){
+        return URL+"/group/saveGroup";
+    }
 }

@@ -3,24 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/green">
+    android:background="@color/grey">
 
     <TextView
         android:id="@+id/group_name"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="32dp"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:paddingLeft="30dp"
+        android:paddingLeft="15dp"
         android:text="群组名称"
-        android:textColor="@color/light"
-        android:textSize="18sp" />
+        android:textColor="@color/text"
+        android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/group_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingRight="15dp"
-        android:text="0"
-        android:textColor="@color/light" />
 </LinearLayout>

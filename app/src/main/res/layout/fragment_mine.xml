@@ -42,7 +42,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="张三"
                 android:textColor="@color/light"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -53,7 +52,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
-                android:text="工号:001"
                 android:textColor="@color/light" />
 
             <TextView
@@ -62,7 +60,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
-                android:text="简历:初级程序员，擅长Java,C..."
                 android:textColor="@color/light" />
         </LinearLayout>
 

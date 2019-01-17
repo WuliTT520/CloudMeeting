@@ -5,25 +5,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.zhihui.imeeting.cloudmeeting.R;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class GroupListViewAdapter extends BaseExpandableListAdapter {
     private Context mcontext;
     public String[] groupString ;
     public List[] childString;
-    public int[] groupNum;
+    HashMap<String, Boolean> state = new HashMap<String, Boolean>();
 
-    public int[] getGroupNum() {
-        return groupNum;
+    public HashMap<String, Boolean> getState() {
+        return state;
     }
 
-    public void setGroupNum(int[] groupNum) {
-        this.groupNum = groupNum;
+    public void setState(HashMap<String, Boolean> state) {
+        this.state = state;
     }
+    //    public int[] groupNum;
+
+//    public int[] getGroupNum() {
+//        return groupNum;
+//    }
+//
+//    public void setGroupNum(int[] groupNum) {
+//        this.groupNum = groupNum;
+//    }
 
     public String[] getGroupString() {
         return groupString;
@@ -101,13 +113,13 @@ public class GroupListViewAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.group_partent_item,parent,false);
             groupViewHolder = new GroupViewHolder();
             groupViewHolder.tvTitle = (TextView)convertView.findViewById(R.id.group_name);
-            groupViewHolder.tvNum=(TextView)convertView.findViewById(R.id.group_num);
+//            groupViewHolder.tvNum=(TextView)convertView.findViewById(R.id.group_num);
             convertView.setTag(groupViewHolder);
         }else {
             groupViewHolder = (GroupViewHolder)convertView.getTag();
         }
         groupViewHolder.tvTitle.setText(groupString[groupPosition]);
-        groupViewHolder.tvNum.setText(groupNum[groupPosition]+"");
+//        groupViewHolder.tvNum.setText(groupNum[groupPosition]+"");
         return convertView;
     }
     /**
@@ -126,17 +138,30 @@ public class GroupListViewAdapter extends BaseExpandableListAdapter {
 
     //取得显示给定分组给定子位置的数据用的视图
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ChildViewHolder childViewHolder;
         if (convertView==null){
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.gruop_child_item,parent,false);
             childViewHolder = new ChildViewHolder();
             childViewHolder.tvTitle = (TextView)convertView.findViewById(R.id.people_name);
+            childViewHolder.childBox=(CheckBox)convertView.findViewById(R.id.childbox);
+            childViewHolder.childBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b){
+                        state.put(groupPosition+","+childPosition,b);
+                    }else {
+                        state.remove(groupPosition+","+childPosition);
+                    }
+                }
+            });
+
             convertView.setTag(childViewHolder);
 
         }else {
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
+        childViewHolder.childBox.setChecked((state.get(groupPosition+","+childPosition) == null ? false : true));
         childViewHolder.tvTitle.setText(childString[groupPosition].get(childPosition).toString());
         return convertView;
     }
@@ -149,11 +174,11 @@ public class GroupListViewAdapter extends BaseExpandableListAdapter {
 
     static class GroupViewHolder {
         TextView tvTitle;
-        TextView tvNum;
+
     }
 
     static class ChildViewHolder {
         TextView tvTitle;
-
+        CheckBox childBox;
     }
 }
