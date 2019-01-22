@@ -33,4 +33,28 @@ public class MyURL {
     public String saveGroup(){
         return URL+"/group/saveGroup";
     }
+    public String updateResume(){
+        return URL+"/updateResume";
+    }
+    public String getCode(){
+        return URL+"/getCode";
+    }
+    public String recordPhone(){
+        return URL+"/recordPhone";
+    }
+    public String selectStatus(){
+        return URL+"/face/selectStatus";
+    }
+    public String insert(){
+        return URL+"/face/insert";
+    }
+    public String update(){
+        return URL+"/face/update";
+    }
+    public String changePwd(){
+        return URL+"/changePwd";
+    }
+    public String updateOneGroup(){
+        return URL+"/group/updateOneGroup";
+    }
 }

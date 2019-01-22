@@ -20,6 +20,7 @@
         android:paddingTop="44dp">
 
         <TextView
+            android:id="@+id/note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -41,7 +42,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/fanhui"
+            android:id="@+id/back"
             android:layout_width="32dp"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/return_white" />
@@ -52,7 +53,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:paddingRight="36dp"
-            android:text="添加人脸数据"
+            android:text="人脸数据"
             android:textAlignment="center"
             android:textColor="@color/light"
             android:textSize="18sp" />

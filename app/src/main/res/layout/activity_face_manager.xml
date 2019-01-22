@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg"
     android:orientation="vertical"
-    tools:context=".activity.SetResumeActivity">
+    tools:context=".activity.FaceManagerActivity">
 
     <LinearLayout
         android:id="@+id/header"
@@ -26,35 +27,45 @@
             android:layout_height="44dp"
             android:layout_weight="1"
             android:gravity="center_vertical|center_horizontal"
-            android:text="个人简介"
-            android:textColor="@color/light"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/change"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:gravity="center_vertical|center_horizontal"
-            android:paddingRight="15dp"
-            android:text="修改"
+            android:paddingRight="29dp"
+            android:text="人脸管理"
             android:textColor="@color/light"
             android:textSize="18sp" />
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/resume"
+    <TextView
+        android:id="@+id/note"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/border_blue"
-        android:ems="10"
-        android:gravity="top"
-        android:inputType="textMultiLine"
-        android:minLines="5"
-        android:padding="4dp"
-        android:scrollbars="vertical"
-        android:text="个人简介内容" />
+        android:layout_height="30dp"
+        android:background="@color/dangerous"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="未添加人脸数据"
+        android:textColor="@color/light" />
+
+    <LinearLayout
+        android:id="@+id/next"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/light"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:text="添加人脸数据"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/enter" />
+    </LinearLayout>
+
 </LinearLayout>

@@ -194,7 +194,10 @@
             android:layout_weight="1"
             android:gravity="right|center_vertical"
             android:textColor="@color/text"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:singleLine="true"
+            android:maxEms="12"
+            android:ellipsize="end"/>
 
         <ImageView
             android:id="@+id/imageView3"

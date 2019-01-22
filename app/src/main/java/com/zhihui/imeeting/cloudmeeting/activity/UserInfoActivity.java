@@ -2,6 +2,7 @@ package com.zhihui.imeeting.cloudmeeting.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
@@ -69,13 +70,17 @@ public class UserInfoActivity extends Activity {
         setPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent=new Intent(UserInfoActivity.this,SetPhoneActivity.class);
+                intent.putExtra("phone",phone);
+                startActivity(intent);
             }
         });
         setResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent=new Intent(UserInfoActivity.this,SetResumeActivity.class);
+                intent.putExtra("resume",resume);
+                startActivityForResult(intent,100);
             }
         });
     }
@@ -157,5 +162,17 @@ public class UserInfoActivity extends Activity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode){
+            case 100:
+                user_resume.setText(data.getStringExtra("resume"));
+                break;
+            case 500:
+                break;
+        }
     }
 }

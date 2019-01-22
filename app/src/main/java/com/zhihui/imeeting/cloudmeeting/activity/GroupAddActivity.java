@@ -253,34 +253,23 @@ public class GroupAddActivity extends Activity {
                             groupid[i]=groups.getJSONObject(i).getInt("id");
                             groupStr[i]=groups.getJSONObject(i).getString("name");
                         }
-//                        for(int i=0;i<groups.length();i++){
-//                            System.out.println("id="+groupid[i]+",name="+groupStr[i]);
-//                        }
-//                        Log.w(TAG,"代码以执行");
+
                         childid=new ArrayList[groups.length()];
-//                        childStr=new String[groups.length()][100];
+
                         childStr=new ArrayList[groups.length()];
-//                        groupnum=new int[groups.length()];
+
                         for(int i=0;i<groups.length();i++){
                             JSONArray people=peoples.getJSONArray(i);
                             childStr[i]=new ArrayList<String>();
                             childid[i]=new ArrayList<Integer>();
                             for(int j=0;j<people.length();j++){
                                 childid[i].add(j,people.getJSONObject(j).getInt("id"));
-//                                childStr[i][j]=people.getJSONObject(j).getString("name");
-//                                String hah=people.getJSONObject(j).getString("name");
+
                                 childStr[i].add(j,people.getJSONObject(j).getString("name"));
                             }
-//                            groupnum[i]=people.length();
+
                         }
-//                        for(int i=0;i<groups.length();i++){
-//                            JSONArray people=peoples.getJSONArray(i);
-//                            for(int j=0;j<people.length();j++){
-//                                System.out.print("id="+childid[i][j]+",name="+childStr[i][j]+" ");
-//                            }
-//                            System.out.println();
-//                        }
-//                        Log.w(TAG,"代码以执行");
+
                         msg=Message.obtain();
                         msg.what=200;
                         handler.sendMessage(msg);

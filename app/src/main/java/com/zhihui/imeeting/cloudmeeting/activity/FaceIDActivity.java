@@ -1,6 +1,9 @@
 package com.zhihui.imeeting.cloudmeeting.activity;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -8,6 +11,8 @@ import android.graphics.Typeface;
 import android.hardware.Camera;
 import android.media.FaceDetector;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -17,8 +22,11 @@ import android.text.style.StyleSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.TextureView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arcsoft.face.AgeInfo;
 import com.arcsoft.face.ErrorInfo;
@@ -31,28 +39,46 @@ import com.arcsoft.face.LivenessInfo;
 import com.arcsoft.face.VersionInfo;
 import com.zhihui.imeeting.cloudmeeting.R;
 import com.zhihui.imeeting.cloudmeeting.common.Constants;
+import com.zhihui.imeeting.cloudmeeting.controller.MyURL;
 import com.zhihui.imeeting.cloudmeeting.util.camera.CameraHelper;
 import com.zhihui.imeeting.cloudmeeting.util.camera.CameraListener;
 import com.zhihui.imeeting.cloudmeeting.widget.FaceRectView;
+
+import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class FaceIDActivity extends AppCompatActivity {
 
     public Button ok;
     public ImageView fanhui;
     public TextureView face;
-
+    private ImageView back;
+    private static File file;
+    private Handler handler;
+    private Message msg;
+    private TextView note;
+    private boolean flag;
     private static final String TAG = "FaceIDActivity";
     FaceEngine faceEngine = null;
     static int errorCode = -1;
-
+    private SharedPreferences sp;
     private CameraHelper cameraHelper;
     private Camera.Size previewSize;
     //private int processMask = FaceEngine.ASF_AGE | FaceEngine.ASF_FACE3DANGLE | FaceEngine.ASF_GENDER | FaceEngine.ASF_LIVENESS;
@@ -67,15 +93,48 @@ public class FaceIDActivity extends AppCompatActivity {
     private static final int ACTION_REQUEST_PERMISSIONS = 0x001;
     private static final String[] NEEDED_PERMISSIONS = new String[]{
             Manifest.permission.CAMERA,
-            Manifest.permission.READ_PHONE_STATE
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face_id);
-
+        flag=getIntent().getBooleanExtra("isisAdd",false);
         previewView=findViewById(R.id.face);
+        back=findViewById(R.id.back);
+        note=findViewById(R.id.note);
+        sp=this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case 404:
+                        Toast.makeText(FaceIDActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 500:
+                        Toast.makeText(FaceIDActivity.this,"数据错误",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 200:
+                        note.setText("保存成功");
+                        Toast.makeText(FaceIDActivity.this,"保存成功",Toast.LENGTH_SHORT).show();
+                        Intent intent=getIntent();
+                        setResult(100, intent);
+                        finish();
+                        break;
+                }
+                super.handleMessage(msg);
+            }
+        };
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=getIntent();
+                setResult(500, intent);
+                finish();
+            }
+        });
         //faceRectView = findViewById(R.id.face_rect_view);
         if(!checkPermissions(NEEDED_PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, NEEDED_PERMISSIONS, ACTION_REQUEST_PERMISSIONS);
@@ -202,53 +261,74 @@ public class FaceIDActivity extends AppCompatActivity {
                     extractFaceFeatureCodes = faceEngine.extractFaceFeature(nv21, previewSize.width, previewSize.height, FaceEngine.CP_PAF_NV21, faceInfoList.get(0), faceFeatures);
                     Log.i("特征值提取: ", "error:"+extractFaceFeatureCodes);
                     if(extractFaceFeatureCodes == ErrorInfo.MOK) {
+                        cameraHelper.stop();
+                        note.setText("正在保存至云端");
                         faceFeatureData = faceFeatures.getFeatureData();
-                        System.out.print("特征值:");
-                        System.out.println(bytesToHex(faceFeatureData));
-                        /*截图功能*/
-//                        Bitmap bitmap=previewView.getBitmap();
-//                        getFile(bitmap);
+//                        System.out.print("特征值:");
+//                        System.out.println(bytesToHex(faceFeatureData));
+                        String faceDetail=bytesToHex(faceFeatureData);
+                        Bitmap bitmap=previewView.getBitmap();
+                        getFile(bitmap);
+                        final OkHttpClient client = new OkHttpClient();
+                        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                        builder.addFormDataPart("fileupload","temp.jpg",RequestBody.create(MediaType.parse(".jpg"), file));
+                        builder.addFormDataPart("faceDetail",faceDetail);
+                        final Request request;
+                        if (flag){
+                            request=new Request.Builder()
+                                    .addHeader("cookie", sp.getString("sessionID", ""))
+                                    .url(new MyURL().insert())
+                                    .post(builder.build())
+                                    .build();
+                        }else {
+                            request=new Request.Builder()
+                                    .addHeader("cookie", sp.getString("sessionID", ""))
+                                    .url(new MyURL().update())
+                                    .post(builder.build())
+                                    .build();
+                        }
+
+                        Call call = client.newCall(request);
+                        call.enqueue(new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                msg=Message.obtain();
+                                msg.what=404;
+                                handler.sendMessage(msg);
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                try {
+                                    String result = response.body().string();
+                                    Log.w(TAG,result);
+                                    JSONObject data =new JSONObject(result);
+                                    boolean flag=data.getBoolean("status");
+                                    if (flag){
+                                        msg=Message.obtain();
+                                        msg.what=200;
+                                        handler.sendMessage(msg);
+                                    }else {
+                                        msg=Message.obtain();
+                                        msg.what=500;
+                                        handler.sendMessage(msg);
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+//
 //                        System.exit(0);
                         return;
                     }
 
-                    //int res = faceEngine.extractFaceFeature(nv21, previewSize.width, previewSize.height, FaceEngine.CP_PAF_NV21, faceInfoList.get(0), mainFeature);
-                    //Log.i("res", "res: " + extractFaceFeatureCodes[0]);
-                    //if (code != ErrorInfo.MOK) {
-                    //    return;
-                    //}
+
                 }else {
                     return;
                 }
 
-                /*
-                Log.i("人脸侦测", "人脸侦测成功");
-                List<AgeInfo> ageInfoList = new ArrayList<>();
-                List<GenderInfo> genderInfoList = new ArrayList<>();
-                List<Face3DAngle> face3DAngleList = new ArrayList<>();
-                List<LivenessInfo> faceLivenessInfoList = new ArrayList<>();
 
-
-                int ageCode = faceEngine.getAge(ageInfoList);
-                int genderCode = faceEngine.getGender(genderInfoList);
-                int face3DAngleCode = faceEngine.getFace3DAngle(face3DAngleList);
-                int livenessCode = faceEngine.getLiveness(faceLivenessInfoList);
-                Log.i("ageCode: ", "ageCode: "+ageCode);
-                Log.i("年龄: ", "年龄: "+ageInfoList.get(0).getAge());
-
-
-                //有其中一个的错误码不为0，return
-                if ((ageCode | genderCode | face3DAngleCode | livenessCode) != ErrorInfo.MOK) {
-                    return;
-                }
-                */
-                /*if (faceRectView != null && drawHelper != null) {
-                    List<DrawInfo> drawInfoList = new ArrayList<>();
-                    for (int i = 0; i < faceInfoList.size(); i++) {
-                        drawInfoList.add(new DrawInfo(faceInfoList.get(i).getRect(), genderInfoList.get(i).getGender(), ageInfoList.get(i).getAge(), faceLivenessInfoList.get(i).getLiveness(), null));
-                    }
-                    drawHelper.draw(faceRectView, drawInfoList);
-                }*/
             }
 
             @Override
@@ -294,7 +374,7 @@ public class FaceIDActivity extends AppCompatActivity {
     public static File getFile(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-        File file = new File(Environment.getExternalStorageDirectory() + "/temp.jpg");
+        file = new File(Environment.getExternalStorageDirectory() + "/temp.jpg");
         try {
             file.createNewFile();
             FileOutputStream fos = new FileOutputStream(file);

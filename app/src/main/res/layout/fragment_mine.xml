@@ -60,7 +60,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/light" />
+                android:textColor="@color/light"
+
+                android:singleLine="true"
+                android:maxEms="24"
+                android:ellipsize="end"/>
         </LinearLayout>
 
         <LinearLayout
@@ -84,6 +88,36 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:text="个人信息"
+                android:textColor="@color/strongText"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/enter" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/change_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/change_pwd" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="修改密码"
                 android:textColor="@color/strongText"
                 android:textSize="18sp" />
 
@@ -123,6 +157,7 @@
                 android:layout_marginRight="15dp"
                 android:src="@drawable/enter" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/face_manager"
             android:layout_width="match_parent"
@@ -195,18 +230,6 @@
             android:layout_marginRight="15dp"
             android:background="@drawable/red_button"
             android:text="退出登陆"
-            android:textColor="@color/light"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/ceshi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/red_button"
-            android:text="测试入口"
             android:textColor="@color/light"
             android:textSize="18sp" />
 

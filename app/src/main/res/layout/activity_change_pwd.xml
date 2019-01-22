@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.GroupSetActivity">
+    tools:context=".activity.ChangePwdActivity">
 
     <LinearLayout
         android:id="@+id/header"
@@ -26,43 +26,75 @@
             android:layout_height="44dp"
             android:layout_weight="1"
             android:gravity="center_vertical|center_horizontal"
-            android:text="群组编辑"
+            android:text="修改密码"
             android:textColor="@color/light"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/done"
+            android:id="@+id/change"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingRight="15dp"
-            android:text="完成"
+            android:text="确定"
             android:textColor="@color/light"
             android:textSize="18sp" />
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
-        android:text="群组名称" />
+        android:text="原始密码" />
 
     <EditText
-        android:id="@+id/group_name"
+        android:id="@+id/old_pwd"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/line_bottom"
         android:ems="10"
-        android:hint="请输入群组名称"
-        android:inputType="textPersonName" />
+        android:inputType="textPassword" />
 
-    <ExpandableListView
-        android:id="@+id/member_list"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="新密码" />
+
+    <EditText
+        android:id="@+id/pwd1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/line_bottom"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="重复新密码" />
+
+    <EditText
+        android:id="@+id/pwd2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/line_bottom"
+        android:ems="10"
+        android:inputType="textPassword" />
+
 </LinearLayout>

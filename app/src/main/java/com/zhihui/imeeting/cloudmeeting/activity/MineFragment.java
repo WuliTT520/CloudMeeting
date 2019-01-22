@@ -51,8 +51,9 @@ public class MineFragment extends Fragment {
     private TextView Tresume;
     private LinearLayout myGroup;
     private LinearLayout info;
+    private LinearLayout face_manager;
+    private LinearLayout change_pwd;
     View view;
-    private Button ceshi;
     private Button logout;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
@@ -106,13 +107,15 @@ public class MineFragment extends Fragment {
     }
 
     public void init(){
-        ceshi=view.findViewById(R.id.ceshi);
+
         logout=view.findViewById(R.id.logout);
         Tname=view.findViewById(R.id.name);
         Tworknum=view.findViewById(R.id.workNum);
         Tresume=view.findViewById(R.id.resume);
         myGroup=view.findViewById(R.id.myGroup);
         info=view.findViewById(R.id.info);
+        face_manager=view.findViewById(R.id.face_manager);
+        change_pwd=view.findViewById(R.id.change_pwd);
         sp = this.getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         handler=new Handler(){
             @Override
@@ -137,13 +140,7 @@ public class MineFragment extends Fragment {
         };
     }
     public void setListener(){
-        ceshi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getActivity(),FaceIDActivity.class);
-                startActivity(intent);
-            }
-        });
+
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,7 +148,13 @@ public class MineFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        face_manager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),FaceManagerActivity.class);
+                startActivity(intent);
+            }
+        });
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -189,6 +192,13 @@ public class MineFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), GroupActivity.class);
+                startActivity(intent);
+            }
+        });
+        change_pwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ChangePwdActivity.class);
                 startActivity(intent);
             }
         });

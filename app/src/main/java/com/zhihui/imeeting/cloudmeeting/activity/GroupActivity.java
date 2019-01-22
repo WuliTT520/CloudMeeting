@@ -173,6 +173,9 @@ public class GroupActivity extends Activity {
             public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
+                        Intent intent=new Intent(GroupActivity.this,GroupSetActivity.class);
+                        intent.putExtra("id",groupid[position]);
+                        startActivity(intent);
 
 //                        Toast.makeText(GroupActivity.this,position+"编辑",Toast.LENGTH_SHORT).show();
                         break;
