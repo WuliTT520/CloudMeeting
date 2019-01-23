@@ -36,7 +36,8 @@
         <activity android:name=".activity.SetPhoneActivity" />
         <activity android:name=".activity.SetResumeActivity" />
         <activity android:name=".activity.FaceManagerActivity" />
-        <activity android:name=".activity.ChangePwdActivity"></activity>
+        <activity android:name=".activity.ChangePwdActivity" />
+        <activity android:name=".activity.MyReserveActivity"></activity>
     </application>
 
 </manifest>

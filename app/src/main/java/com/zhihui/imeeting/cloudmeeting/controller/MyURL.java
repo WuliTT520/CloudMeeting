@@ -57,4 +57,13 @@ public class MyURL {
     public String updateOneGroup(){
         return URL+"/group/updateOneGroup";
     }
+    public String showMyReserve(){
+        return URL+"/meeting/showMyReserve";
+    }
+    public String specifiedMyReserve(){
+        return URL+"/meeting/specifiedMyReserve";
+    }
+    public String showOneDayReserve(){
+        return URL+"/meeting/showOneDayReserve";
+    }
 }
