@@ -37,7 +37,11 @@
         <activity android:name=".activity.SetResumeActivity" />
         <activity android:name=".activity.FaceManagerActivity" />
         <activity android:name=".activity.ChangePwdActivity" />
-        <activity android:name=".activity.MyReserveActivity"></activity>
+        <activity android:name=".activity.MyReserveActivity" />
+        <activity android:name=".activity.AttendeeActivity" />
+        <activity android:name=".activity.MyGroupActivity" />
+        <activity android:name=".activity.ShowGroupInfoActivity" />
+        <activity android:name=".activity.ChooseBoardroomActivity"></activity>
     </application>
 
 </manifest>

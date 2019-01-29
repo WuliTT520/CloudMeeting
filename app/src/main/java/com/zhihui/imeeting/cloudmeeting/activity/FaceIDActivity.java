@@ -74,7 +74,7 @@ public class FaceIDActivity extends AppCompatActivity {
     private Handler handler;
     private Message msg;
     private TextView note;
-    private boolean flag;
+    private boolean flag2;
     private static final String TAG = "FaceIDActivity";
     FaceEngine faceEngine = null;
     static int errorCode = -1;
@@ -101,7 +101,7 @@ public class FaceIDActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face_id);
-        flag=getIntent().getBooleanExtra("isisAdd",false);
+        flag2=getIntent().getBooleanExtra("isAdd",false);
         previewView=findViewById(R.id.face);
         back=findViewById(R.id.back);
         note=findViewById(R.id.note);
@@ -273,8 +273,9 @@ public class FaceIDActivity extends AppCompatActivity {
                         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
                         builder.addFormDataPart("fileupload","temp.jpg",RequestBody.create(MediaType.parse(".jpg"), file));
                         builder.addFormDataPart("faceDetail",faceDetail);
+                        Log.w("特征值",faceDetail);
                         final Request request;
-                        if (flag){
+                        if (flag2){
                             request=new Request.Builder()
                                     .addHeader("cookie", sp.getString("sessionID", ""))
                                     .url(new MyURL().insert())

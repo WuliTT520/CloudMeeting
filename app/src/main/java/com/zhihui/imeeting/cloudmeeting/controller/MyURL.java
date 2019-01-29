@@ -66,4 +66,16 @@ public class MyURL {
     public String showOneDayReserve(){
         return URL+"/meeting/showOneDayReserve";
     }
+    public String reserveIndex(){
+        return URL+"/meeting/reserveIndex";
+    }
+    public String selectPeople(){
+        return URL+"/meeting/selectPeople";
+    }
+    public String getGroupList(){
+        return URL+"/meeting/getGroupList";
+    }
+    public String reserveMeeting(){
+        return URL+"/meeting/reserveMeeting";
+    }
 }

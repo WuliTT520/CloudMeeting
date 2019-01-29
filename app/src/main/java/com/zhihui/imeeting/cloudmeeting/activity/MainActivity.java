@@ -3,25 +3,51 @@ package com.zhihui.imeeting.cloudmeeting.activity;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhihui.imeeting.cloudmeeting.R;
+import com.zhihui.imeeting.cloudmeeting.controller.MyURL;
+import com.zhihui.imeeting.cloudmeeting.helper.FileHelper;
+import com.zhihui.imeeting.cloudmeeting.helper.Userinfo;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG="MainActivity";
     FrameLayout show;
     LinearLayout home,schedule,add,news,mine;
     ImageView home_pic,schedule_pic,add_pic,news_pic,mine_pic;
     TextView home_text,schedule_text,add_text,news_text,mine_text;
-
-
+    private SharedPreferences sp;
+    private Handler handler;
+    private Message msg;
+    private List<Integer> id=new ArrayList<>();
+    private List<String> name=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +55,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         init();
         setListener();
+        getInfo();
+        getInfo2();
     }
     public void init(){
+
+        sp=this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 404:
+                        Toast.makeText(MainActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 500:
+                        Toast.makeText(MainActivity.this,"请先登陆",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 200:
+                        Userinfo userinfo=new Userinfo(MainActivity.this);
+                        userinfo.delete();
+                        for(int i=0;i<id.size();i++){
+                            userinfo.insert(id.get(i),name.get(i));
+                        }
+                        Log.w(TAG,"同事数据存储完毕");
+                        break;
+                }
+            }
+        };
         show=findViewById(R.id.show);
         home=findViewById(R.id.home);
         schedule=findViewById(R.id.schedule);
@@ -155,5 +207,89 @@ public class MainActivity extends AppCompatActivity {
             mine_text.setTextColor(getColor(R.color.text));
         }
     }
+    public void getInfo(){
+        MyURL url=new MyURL();
+        final OkHttpClient client = new OkHttpClient();
+        final Request request = new Request.Builder()
+                .addHeader("cookie", sp.getString("sessionID", ""))
+                .url(url.showUser())
+                .build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                msg=Message.obtain();
+                msg.what=404;
+                handler.sendMessage(msg);
+            }
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    String result = response.body().string();
+                    Log.w(TAG, result);
+                    JSONObject data = new JSONObject(result);
+                    boolean flag = data.getBoolean("status");
+                    if (flag){
+                        JSONArray users=data.getJSONArray("data").getJSONArray(1);
+                        for(int i=0;i<users.length();i++){
+                            for(int j=0;j<users.getJSONArray(i).length();j++){
+//                                Log.w(TAG,"id="+users.getJSONArray(i).getJSONObject(j).getInt("id")+",name="+users.getJSONArray(i).getJSONObject(j).getString("name"));
+                                id.add(users.getJSONArray(i).getJSONObject(j).getInt("id"));
+                                name.add(users.getJSONArray(i).getJSONObject(j).getString("name"));
+                            }
+                        }
+                        msg=Message.obtain();
+                        msg.what=200;
+                        handler.sendMessage(msg);
+                    }else {
+                        msg=Message.obtain();
+                        msg.what=500;
+                        handler.sendMessage(msg);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    public void getInfo2(){
+        MyURL url=new MyURL();
+        final OkHttpClient client = new OkHttpClient();
+        final Request request = new Request.Builder()
+                .addHeader("cookie", sp.getString("sessionID", ""))
+                .url(url.reserveIndex())
+                .build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                msg=Message.obtain();
+                msg.what=404;
+                handler.sendMessage(msg);
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    String result = response.body().string();
+                    Log.w(TAG, result);
+                    JSONObject data = new JSONObject(result);
+                    boolean flag = data.getBoolean("status");
+                    if (flag){
+                        FileHelper helper=new FileHelper();
+                        helper.write(MainActivity.this,"meetingInfo.txt",result);
+//                        Log.w(TAG,helper.read(MainActivity.this,"meetingInfo.txt"));
+                    }else {
+                        msg=Message.obtain();
+                        msg.what=500;
+                        handler.sendMessage(msg);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 }
