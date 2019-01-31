@@ -18,9 +18,19 @@ public class ReserveListViewAdapter extends RecyclerView.Adapter<ReserveListView
     private String[] meetDate;
     private String[] begin;
     private String[] over;
-
+    private ReserveListViewAdapter.OnItemClickLitener mOnItemClickLitener;
+    public interface OnItemClickLitener{
+        void onItemClick(View view, int position);
+    }
+    public void setOnItemClickLitener(ReserveListViewAdapter.OnItemClickLitener mOnItemClickLitener){
+        this.mOnItemClickLitener = mOnItemClickLitener;
+    }
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public String[] getStatus() {
+        return status;
     }
 
     public void setTopic(String[] topic) {
@@ -53,7 +63,7 @@ public class ReserveListViewAdapter extends RecyclerView.Adapter<ReserveListView
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
 //        TextView textView = holder.textView;
 //        textView.setText("-----"+position);
         TextView statusTV=holder.status;
@@ -69,6 +79,14 @@ public class ReserveListViewAdapter extends RecyclerView.Adapter<ReserveListView
         if (status[position].equals("预约失败")||status[position].equals("会议结束")
                 ||status[position].equals("取消会议")||status[position].equals("调用失败")){
             holder.root.setBackgroundResource(R.drawable.gradient_grey);
+        }
+        if (mOnItemClickLitener != null) {
+            holder.root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnItemClickLitener.onItemClick(view, position);
+                }
+            });
         }
     }
 

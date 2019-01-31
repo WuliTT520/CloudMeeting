@@ -72,7 +72,6 @@ public class MyReserveActivity extends BaseActivity {
     protected void onCreatee() {
         init();
         setListener();
-//        getInfo();
 
     }
 
@@ -99,12 +98,41 @@ public class MyReserveActivity extends BaseActivity {
                         break;
                     case 201:
                         recyclerView.setLayoutManager(new LinearLayoutManager(MyReserveActivity.this));
-                        ReserveListViewAdapter adapter = new ReserveListViewAdapter(MyReserveActivity.this);
+                        final ReserveListViewAdapter adapter = new ReserveListViewAdapter(MyReserveActivity.this);
                         adapter.setBegin(begin);
                         adapter.setMeetDate(meetDate);
                         adapter.setOver(over);
                         adapter.setStatus(status);
                         adapter.setTopic(topic);
+                        adapter.setOnItemClickLitener(new ReserveListViewAdapter.OnItemClickLitener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                String str=status[position];
+                                Toast.makeText(MyReserveActivity.this,id[position]+"",Toast.LENGTH_LONG).show();
+                                switch (str){
+                                    case "预约成功":
+
+                                        break;
+                                    case "会议结束":
+
+                                        break;
+                                    case "取消会议":
+
+                                        break;
+                                    case "预约失败":
+
+                                        break;
+                                    case "预约中":
+                                        break;
+                                    case "会议进行中":
+                                        break;
+                                    case "调用失败":
+                                        break;
+                                    case "调用中":
+                                        break;
+                                }
+                            }
+                        });
                         recyclerView.setAdapter(adapter);
                 }
             }

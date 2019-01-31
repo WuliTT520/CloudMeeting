@@ -41,7 +41,9 @@
         <activity android:name=".activity.AttendeeActivity" />
         <activity android:name=".activity.MyGroupActivity" />
         <activity android:name=".activity.ShowGroupInfoActivity" />
-        <activity android:name=".activity.ChooseBoardroomActivity"></activity>
+        <activity android:name=".activity.ChooseBoardroomActivity" />
+        <activity android:name=".activity.BookingSuccessfulActivity" />
+        <activity android:name=".activity.MeetingInfoActivity"></activity>
     </application>
 
 </manifest>
