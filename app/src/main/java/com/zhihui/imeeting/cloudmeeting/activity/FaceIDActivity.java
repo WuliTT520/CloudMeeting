@@ -273,6 +273,7 @@ public class FaceIDActivity extends AppCompatActivity {
                         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
                         builder.addFormDataPart("fileupload","temp.jpg",RequestBody.create(MediaType.parse(".jpg"), file));
                         builder.addFormDataPart("faceDetail",faceDetail);
+//                        builder.
                         Log.w("特征值",faceDetail);
                         final Request request;
                         if (flag2){

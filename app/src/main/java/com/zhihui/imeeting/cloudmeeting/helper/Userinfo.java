@@ -3,6 +3,7 @@ package com.zhihui.imeeting.cloudmeeting.helper;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class Userinfo {
     private DatabaseHelper dbHelper;
@@ -16,12 +17,14 @@ public class Userinfo {
         db.execSQL(sql, obj);
     }
     public String searchById(int id){
+        Log.w("同事姓名","执行到这里");
         String name="";
         SQLiteDatabase db=dbHelper.getReadableDatabase();
         Cursor cursor=db.rawQuery("select * from userinfo where id =?",new String[]{id+""});
         while (cursor.moveToNext()){
             name=cursor.getString(cursor.getColumnIndex("name"));
         }
+        Log.w("同事姓名",name);
         return name;
     }
     public boolean search(int id){

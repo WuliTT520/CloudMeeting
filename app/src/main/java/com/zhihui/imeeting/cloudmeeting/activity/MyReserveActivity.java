@@ -2,6 +2,7 @@ package com.zhihui.imeeting.cloudmeeting.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
@@ -40,13 +41,7 @@ import okhttp3.Response;
 
 public class MyReserveActivity extends BaseActivity {
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_my_reserve);
-//        init();
-//        setListener();
-//    }
+
     private static final String TAG="MyReserveActivity";
     private SwipeRefreshLayout refresh_layout;
     private RecyclerView recyclerView;
@@ -108,27 +103,25 @@ public class MyReserveActivity extends BaseActivity {
                             @Override
                             public void onItemClick(View view, int position) {
                                 String str=status[position];
-                                Toast.makeText(MyReserveActivity.this,id[position]+"",Toast.LENGTH_LONG).show();
+//                                Toast.makeText(MyReserveActivity.this,id[position]+"",Toast.LENGTH_LONG).show();
                                 switch (str){
                                     case "预约成功":
 
                                         break;
-                                    case "会议结束":
-
-                                        break;
-                                    case "取消会议":
-
-                                        break;
-                                    case "预约失败":
-
-                                        break;
+                                    case "调用中":
                                     case "预约中":
+
                                         break;
                                     case "会议进行中":
+
                                         break;
                                     case "调用失败":
-                                        break;
-                                    case "调用中":
+                                    case "预约失败":
+                                    case "取消会议":
+                                    case "会议结束":
+                                        Intent intent=new Intent(MyReserveActivity.this,MeetingInfoActivity.class);
+                                        intent.putExtra("meetingId",id[position]);
+                                        startActivity(intent);
                                         break;
                                 }
                             }

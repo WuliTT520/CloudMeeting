@@ -55,7 +55,7 @@ public class BoardroomListAdapter extends RecyclerView.Adapter<BoardroomListAdap
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MyViewHolder viewHolder=new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.boardroom_item, parent,false));;
+        MyViewHolder viewHolder=new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.boardroom_item, parent,false));
 
         return viewHolder;
     }
@@ -80,6 +80,7 @@ public class BoardroomListAdapter extends RecyclerView.Adapter<BoardroomListAdap
                 }
             });
         }
+
     }
 
     @Override

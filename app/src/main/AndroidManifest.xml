@@ -43,7 +43,8 @@
         <activity android:name=".activity.ShowGroupInfoActivity" />
         <activity android:name=".activity.ChooseBoardroomActivity" />
         <activity android:name=".activity.BookingSuccessfulActivity" />
-        <activity android:name=".activity.MeetingInfoActivity"></activity>
+        <activity android:name=".activity.MeetingInfoActivity" />
+        <activity android:name=".activity.JoinMemberListActivity"></activity>
     </application>
 
 </manifest>

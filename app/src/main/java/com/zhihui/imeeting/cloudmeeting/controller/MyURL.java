@@ -78,4 +78,7 @@ public class MyURL {
     public String reserveMeeting(){
         return URL+"/meeting/reserveMeeting";
     }
+    public String showOneReserveDetail(){
+        return URL+"/meeting/showOneReserveDetail";
+    }
 }
