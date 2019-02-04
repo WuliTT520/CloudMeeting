@@ -110,7 +110,9 @@ public class MyReserveActivity extends BaseActivity {
                                         break;
                                     case "调用中":
                                     case "预约中":
-
+                                        Intent intent2=new Intent(MyReserveActivity.this,MeetingInfo2Activity.class);
+                                        intent2.putExtra("meetingId",id[position]);
+                                        startActivity(intent2);
                                         break;
                                     case "会议进行中":
 
