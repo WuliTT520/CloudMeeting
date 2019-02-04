@@ -1,10 +1,12 @@
 package com.zhihui.imeeting.cloudmeeting.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -134,7 +136,21 @@ public class MeetingInfo2Activity extends Activity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MeetingInfo2Activity.this,"取消会议",Toast.LENGTH_LONG).show();
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MeetingInfo2Activity.this);
+                builder.setTitle("确定要取消吗");
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(MeetingInfo2Activity.this,"取消会议",Toast.LENGTH_LONG).show();
+                    }
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                final AlertDialog dialog = builder.show();
 
             }
         });
