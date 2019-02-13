@@ -23,5 +23,37 @@
             android:text="联系人"
             android:textColor="@color/light"
             android:textSize="18sp" />
+
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/grey_button"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="搜索" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bg" />
+    </LinearLayout>
+
+    <ExpandableListView
+        android:id="@+id/member_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:childDivider="@android:color/transparent"
+        android:divider="@android:color/transparent" />
 </LinearLayout>

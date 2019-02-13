@@ -147,7 +147,7 @@ public class AddActivity extends Activity {
         }
         cal = Calendar.getInstance();
         current_time_year = String.valueOf(cal.get(Calendar.YEAR));
-        current_time_month = String.valueOf(cal.get(Calendar.MONTH))+1;
+        current_time_month = String.valueOf(cal.get(Calendar.MONTH)+1);
         current_time_day = String.valueOf(cal.get(Calendar.DATE));
         if (cal.get(Calendar.AM_PM) == 0)
             current_time_hour = String.valueOf(cal.get(Calendar.HOUR));

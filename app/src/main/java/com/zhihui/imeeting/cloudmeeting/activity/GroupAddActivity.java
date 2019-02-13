@@ -79,7 +79,7 @@ public class GroupAddActivity extends Activity {
                         Toast.makeText(GroupAddActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
                         break;
                     case 500:
-                        Toast.makeText(GroupAddActivity.this,"数据错误",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GroupAddActivity.this,"请先登陆",Toast.LENGTH_SHORT).show();
                         break;
                     case 200:
                         adapter = new GroupListViewAdapter();

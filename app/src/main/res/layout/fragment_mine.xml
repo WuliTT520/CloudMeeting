@@ -101,7 +101,7 @@
         <LinearLayout
             android:id="@+id/change_pwd"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:background="@color/light"
             android:orientation="horizontal">
 
@@ -131,7 +131,7 @@
         <LinearLayout
             android:id="@+id/myMetting"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@color/light"
             android:orientation="horizontal">
 
@@ -192,7 +192,7 @@
         <LinearLayout
             android:id="@+id/myGroup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@color/light"
             android:orientation="horizontal">
 

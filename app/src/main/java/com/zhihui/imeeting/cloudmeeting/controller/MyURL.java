@@ -81,4 +81,7 @@ public class MyURL {
     public String showOneReserveDetail(){
         return URL+"/meeting/showOneReserveDetail";
     }
+    public String cancelMeeting(){
+        return URL+"/meeting/cancelMeeting";
+    }
 }

@@ -58,6 +58,9 @@ public class MyReserveActivity extends BaseActivity {
     private String[] meetDate;
     private String[] begin;
     private String[] over;
+    private int year;
+    private int month;
+    private int day;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_reserve;
@@ -112,7 +115,7 @@ public class MyReserveActivity extends BaseActivity {
                                     case "预约中":
                                         Intent intent2=new Intent(MyReserveActivity.this,MeetingInfo2Activity.class);
                                         intent2.putExtra("meetingId",id[position]);
-                                        startActivity(intent2);
+                                        startActivityForResult(intent2,1);
                                         break;
                                     case "会议进行中":
 
@@ -138,9 +141,9 @@ public class MyReserveActivity extends BaseActivity {
             @Override
             public void onCalendarDateChanged(NDate date, boolean isClick) {
 
-                int year=date.localDate.getYear();
-                int month=date.localDate.getMonthOfYear();
-                int day=date.localDate.getDayOfMonth();
+                year=date.localDate.getYear();
+                month=date.localDate.getMonthOfYear();
+                day=date.localDate.getDayOfMonth();
                 getInfo(year+"-"+String.format("%02d", month));
 //                Log.w(TAG,year+"-"+String.format("%02d", month));
                 getInfo2(year+"-"+String.format("%02d", month)+"-"+String.format("%02d", day));
@@ -156,12 +159,8 @@ public class MyReserveActivity extends BaseActivity {
         refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refresh_layout.setRefreshing(false);
-                    }
-                }, 1000);
+                getInfo2(year+"-"+String.format("%02d", month)+"-"+String.format("%02d", day));
+                refresh_layout.setRefreshing(false);
 
             }
         });
@@ -284,5 +283,17 @@ public class MyReserveActivity extends BaseActivity {
     }
     public void monthCalendar(View view) {
         miui9Calendar.toMonth();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode){
+            case 1:
+                getInfo2(year+"-"+String.format("%02d", month)+"-"+String.format("%02d", day));
+                break;
+            case 500:
+                break;
+        }
     }
 }

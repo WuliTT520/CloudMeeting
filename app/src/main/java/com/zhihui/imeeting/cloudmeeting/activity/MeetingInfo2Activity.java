@@ -103,6 +103,11 @@ public class MeetingInfo2Activity extends Activity {
                         joinPeopleNum_tv.setText(joinPeopleNum+"人");
                         content_tv.setText(content);
                         break;
+                    case 201:
+                        Toast.makeText(MeetingInfo2Activity.this,"取消会议成功",Toast.LENGTH_LONG).show();
+                        setResult(1);
+                        finish();
+                        break;
                 }
             }
         };
@@ -111,6 +116,8 @@ public class MeetingInfo2Activity extends Activity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                Intent intent=getIntent();
+                setResult(500);
                 finish();
             }
         });
@@ -142,7 +149,46 @@ public class MeetingInfo2Activity extends Activity {
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(MeetingInfo2Activity.this,"取消会议",Toast.LENGTH_LONG).show();
+//                        Toast.makeText(MeetingInfo2Activity.this,"取消会议",Toast.LENGTH_LONG).show();
+                        MyURL url=new MyURL();
+                        final OkHttpClient client = new OkHttpClient();
+                        RequestBody body=new FormBody.Builder()
+                                .add("meetingId",meetingId+"")
+                                .build();
+                        final Request request = new Request.Builder()
+                                .url(url.cancelMeeting())
+                                .post(body)
+                                .build();
+                        Call call = client.newCall(request);
+                        call.enqueue(new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                msg=Message.obtain();
+                                msg.what=404;
+                                handler.sendMessage(msg);
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                try {
+                                    String result = response.body().string();
+                                    Log.w(TAG,result);
+                                    JSONObject data =new JSONObject(result);
+                                    boolean flag=data.getBoolean("status");
+                                    if (flag){
+                                        msg=Message.obtain();
+                                        msg.what=201;
+                                        handler.sendMessage(msg);
+                                    }else {
+                                        msg=Message.obtain();
+                                        msg.what=500;
+                                        handler.sendMessage(msg);
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                     }
                 });
                 builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
