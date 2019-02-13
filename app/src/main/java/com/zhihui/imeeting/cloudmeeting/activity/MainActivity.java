@@ -22,6 +22,7 @@ import com.zhihui.imeeting.cloudmeeting.R;
 import com.zhihui.imeeting.cloudmeeting.controller.MyURL;
 import com.zhihui.imeeting.cloudmeeting.helper.FileHelper;
 import com.zhihui.imeeting.cloudmeeting.helper.Userinfo;
+import com.zhihui.imeeting.cloudmeeting.service.MsgService;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -57,7 +58,15 @@ public class MainActivity extends AppCompatActivity {
         setListener();
         getInfo();
         getInfo2();
+        BindService();
     }
+
+    private void BindService() {
+        Intent intent=new Intent(MainActivity.this,MsgService.class);
+        startService(intent);
+//        Toast.makeText(MainActivity.this,"开始服务",Toast.LENGTH_LONG).show();
+    }
+
     public void init(){
 
         sp=this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);

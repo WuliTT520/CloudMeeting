@@ -48,7 +48,12 @@
         <activity android:name=".activity.MeetingInfoActivity" />
         <activity android:name=".activity.JoinMemberListActivity" />
         <activity android:name=".activity.MeetingInfo2Activity" />
-        <activity android:name=".activity.ColleagueInfoActivity"></activity>
+        <activity android:name=".activity.ColleagueInfoActivity" />
+
+        <service
+            android:name=".service.MsgService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

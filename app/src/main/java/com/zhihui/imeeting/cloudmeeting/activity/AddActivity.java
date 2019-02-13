@@ -147,8 +147,9 @@ public class AddActivity extends Activity {
         }
         cal = Calendar.getInstance();
         current_time_year = String.valueOf(cal.get(Calendar.YEAR));
-        current_time_month = String.valueOf(cal.get(Calendar.MONTH)+1);
-        current_time_day = String.valueOf(cal.get(Calendar.DATE));
+        current_time_month = String.format("%02d",cal.get(Calendar.MONTH)+1);
+        current_time_day = String.format("%02d",cal.get(Calendar.DATE));
+
         if (cal.get(Calendar.AM_PM) == 0)
             current_time_hour = String.valueOf(cal.get(Calendar.HOUR));
         else
@@ -156,8 +157,7 @@ public class AddActivity extends Activity {
         current_time_minute = String.valueOf(cal.get(Calendar.MINUTE));
         current_time=current_time_year+"年"+current_time_month+"月"+current_time_day+
                 "日"+current_time_hour+":"+current_time_minute;
-//        Toast.makeText(AddActivity.this,current_time_year+"年"+current_time_month+"月"+current_time_day+
-//                "日"+current_time_hour+"时"+current_time_minute+"分",Toast.LENGTH_LONG).show();
+        Toast.makeText(AddActivity.this,current_time,Toast.LENGTH_LONG).show();
         beginTime1.setText(current_time_year+"年"+current_time_month+"月"+current_time_day+ "日");
         beginTime2.setText((1+Integer.parseInt(current_time_hour))%24+":00");
         overTime1.setText(current_time_year+"年"+current_time_month+"月"+current_time_day+ "日");

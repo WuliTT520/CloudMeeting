@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.zhihui.imeeting.cloudmeeting.R;
 import com.zhihui.imeeting.cloudmeeting.controller.MyURL;
+import com.zhihui.imeeting.cloudmeeting.service.MsgService;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -182,6 +183,8 @@ public class MineFragment extends Fragment {
                 editor.putString("userCode","");
                 editor.putBoolean("isLogin", false);
                 editor.commit();
+                Intent stopService=new Intent(getActivity(),MsgService.class);
+                getActivity().stopService(stopService);
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();

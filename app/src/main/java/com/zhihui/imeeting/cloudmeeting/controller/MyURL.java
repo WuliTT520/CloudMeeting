@@ -84,4 +84,7 @@ public class MyURL {
     public String cancelMeeting(){
         return URL+"/meeting/cancelMeeting";
     }
+    public String getMsg(){
+        return URL+"/meeting/pushMessage";
+    }
 }
