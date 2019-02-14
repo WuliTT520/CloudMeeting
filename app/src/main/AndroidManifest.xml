@@ -55,7 +55,11 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.MeetingChangeActivity"></activity>
+        <activity android:name=".activity.MeetingChangeActivity" />
+        <activity android:name=".activity.MeetingInfo3Activity" />
+        <activity android:name=".activity.MeetingChange2Activity" />
+        <activity android:name=".activity.MeetingInfo4Activity" />
+        <activity android:name=".activity.MeetingChange3Activity"></activity>
     </application>
 
 </manifest>

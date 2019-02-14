@@ -90,4 +90,7 @@ public class MyURL {
     public String showOne(){
         return URL+"/userInfo/showOne";
     }
+    public String advanceOver(){
+        return URL+"/meeting/advanceOver";
+    }
 }

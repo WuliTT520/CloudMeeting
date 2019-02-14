@@ -37,9 +37,10 @@
         android:gravity="center_vertical|center_horizontal"
         android:text="搜索" />
 
-    <ListView
-        android:id="@+id/news_list"
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/msgList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="@color/grey" />
 
 </LinearLayout>

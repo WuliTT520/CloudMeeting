@@ -109,7 +109,9 @@ public class MyReserveActivity extends BaseActivity {
 //                                Toast.makeText(MyReserveActivity.this,id[position]+"",Toast.LENGTH_LONG).show();
                                 switch (str){
                                     case "预约成功":
-
+                                        Intent intent4=new Intent(MyReserveActivity.this,MeetingInfo4Activity.class);
+                                        intent4.putExtra("meetingId",id[position]);
+                                        startActivityForResult(intent4,3);
                                         break;
                                     case "调用中":
                                     case "预约中":
@@ -118,7 +120,9 @@ public class MyReserveActivity extends BaseActivity {
                                         startActivityForResult(intent2,1);
                                         break;
                                     case "会议进行中":
-
+                                        Intent intent3=new Intent(MyReserveActivity.this,MeetingInfo3Activity.class);
+                                        intent3.putExtra("meetingId",id[position]);
+                                        startActivityForResult(intent3,2);
                                         break;
                                     case "调用失败":
                                     case "预约失败":

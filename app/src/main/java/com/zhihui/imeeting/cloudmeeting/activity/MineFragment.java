@@ -182,6 +182,7 @@ public class MineFragment extends Fragment {
                 editor.putString("sessionID", "");
                 editor.putString("userCode","");
                 editor.putBoolean("isLogin", false);
+                editor.putInt("userId",-1);
                 editor.commit();
                 Intent stopService=new Intent(getActivity(),MsgService.class);
                 getActivity().stopService(stopService);

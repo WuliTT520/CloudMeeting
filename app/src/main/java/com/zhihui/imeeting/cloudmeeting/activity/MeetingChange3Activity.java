@@ -33,7 +33,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class MeetingChangeActivity extends Activity {
+public class MeetingChange3Activity extends Activity {
     private final static String TAG="MeetingChangeActivity";
     private int meetingId;
     private String topic;
@@ -67,7 +67,7 @@ public class MeetingChangeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meeting_change);
+        setContentView(R.layout.activity_meeting_change3);
         init();
         setListener();
         getInfo();
@@ -121,8 +121,9 @@ public class MeetingChangeActivity extends Activity {
             @Override
             public void onClick(View view) {
                 finish();
+
                 if (topic_tv.getText()==null||content_tv.getText()==null||joinPeopleId.length==0||meetRoomId==0){
-                    Toast.makeText(MeetingChangeActivity.this,"请完成填写信息",Toast.LENGTH_LONG).show();
+                    Toast.makeText(MeetingChange3Activity.this,"请完成填写信息",Toast.LENGTH_LONG).show();
                 }else {
                     try {
                         JSONObject jsonObject=new JSONObject();

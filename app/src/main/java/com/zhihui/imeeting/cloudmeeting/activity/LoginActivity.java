@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     Handler handler;
     Message msg;
     String sessionId;
+    int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("userCode",userCode.getText().toString());
                         editor.putBoolean("isLogin",true);
                         editor.putString("sessionID",sessionId);
+                        editor.putInt("userId",id);
                         editor.commit();
 
                         Intent intent=new Intent(LoginActivity.this,MainActivity.class);
@@ -124,7 +126,9 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject data =new  JSONObject(result);
                             boolean flag=data.getBoolean("status");
                             if (flag){
+                                id=data.getJSONObject("data").getInt("id");
                                 Log.w("flag","true");
+
                                 msg=Message.obtain();
                                 msg.what=3;
                                 handler.sendMessage(msg);

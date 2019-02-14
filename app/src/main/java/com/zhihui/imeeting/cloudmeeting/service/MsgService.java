@@ -16,6 +16,7 @@ import android.util.Log;
 import com.zhihui.imeeting.cloudmeeting.R;
 import com.zhihui.imeeting.cloudmeeting.activity.MainActivity;
 import com.zhihui.imeeting.cloudmeeting.controller.MyURL;
+import com.zhihui.imeeting.cloudmeeting.helper.Msg;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -81,7 +82,16 @@ public class MsgService extends Service {
                                     return;
                                 }
                                 for(int i=0;i<info.length();i++){
+                                    /*获取数据*/
                                     String message=info.getJSONObject(i).getString("message");
+                                    int id=info.getJSONObject(i).getInt("id");
+                                    int receiveId=info.getJSONObject(i).getInt("receiveId");
+                                    String time=info.getJSONObject(i).getString("time");
+                                    int meetingId=info.getJSONObject(i).getInt("meetingId");
+                                    /*数据库处理*/
+                                    Msg msg=new Msg(getApplicationContext());
+                                    msg.insert(id,message,receiveId,time,meetingId);
+                                    /*前端显示*/
                                     NotificationManager manager=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                                     NotificationChannel channel = new NotificationChannel("1",
                                             "动态消息", NotificationManager.IMPORTANCE_DEFAULT);
