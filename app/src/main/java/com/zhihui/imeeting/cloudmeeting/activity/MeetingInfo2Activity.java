@@ -60,6 +60,7 @@ public class MeetingInfo2Activity extends Activity {
     private int[] outsideJoinPersonsId;
     private String[] outsideJoinPersonsName;
     private String[] outsideJoinPersonsPhone;
+    private int meetRoomId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +138,18 @@ public class MeetingInfo2Activity extends Activity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MeetingInfo2Activity.this,"修改会议",Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(MeetingInfo2Activity.this,MeetingChangeActivity.class);
+                intent.putExtra("meetingId",meetingId);
+                intent.putExtra("topic",topic);
+                intent.putExtra("beginTime",beginTime);
+                intent.putExtra("overTime",overTime);
+                intent.putExtra("prepareTime",prepareTime);
+                intent.putExtra("meetroom",meetroom);
+                intent.putExtra("joinPeopleNum",joinPeopleNum);
+                intent.putExtra("content",content);
+                intent.putExtra("joinPeopleId",joinPeopleId);
+                intent.putExtra("meetRoomId",meetRoomId);
+                startActivityForResult(intent,10);
             }
         });
 
@@ -236,6 +249,7 @@ public class MeetingInfo2Activity extends Activity {
                         prepareTime=info.getInt("prepareTime");
                         meetroom=info.getString("meetroom");
                         joinPeopleNum=info.getJSONArray("joinPeopleId").length();
+                        meetRoomId=info.getInt("meetRoomId");
                         joinPeopleId=new int[joinPeopleNum];
                         for(int i=0;i<joinPeopleNum;i++){
                             joinPeopleId[i]=info.getJSONArray("joinPeopleId").getInt(i);

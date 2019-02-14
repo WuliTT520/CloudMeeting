@@ -87,4 +87,7 @@ public class MyURL {
     public String getMsg(){
         return URL+"/meeting/pushMessage";
     }
+    public String showOne(){
+        return URL+"/userInfo/showOne";
+    }
 }

@@ -17,10 +17,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String sql = "create table userinfo( id int(20) primary key not null , name varchar(20) not null );";
+        String sql2= "create table msg( id int(20) primary key not null , message varchar(255) not null , receive_id int(11) not null ," +
+                " time varchar(255) not null , meeting_id int(11) not null)";
 //        String sql2="create table ding( _no integer PRIMARY KEY , text varchar(100) not null , time varchar(20) not null);";
 //        System.out.println(sql2);
         Log.i(TAG, "create Database------------->");
         sqLiteDatabase.execSQL(sql);
+        sqLiteDatabase.execSQL(sql2);
 //        sqLiteDatabase.execSQL(sql2);
     }
 
