@@ -59,7 +59,9 @@
         <activity android:name=".activity.MeetingInfo3Activity" />
         <activity android:name=".activity.MeetingChange2Activity" />
         <activity android:name=".activity.MeetingInfo4Activity" />
-        <activity android:name=".activity.MeetingChange3Activity"></activity>
+        <activity android:name=".activity.MeetingChange3Activity" />
+        <activity android:name=".activity.MeetingInfo5Activity" />
+        <activity android:name=".activity.LeaveInfoActivity"></activity>
     </application>
 
 </manifest>

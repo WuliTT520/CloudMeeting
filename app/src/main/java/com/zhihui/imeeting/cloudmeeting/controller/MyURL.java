@@ -93,4 +93,10 @@ public class MyURL {
     public String advanceOver(){
         return URL+"/meeting/advanceOver";
     }
+    public String selectMyJoinMeetingByDate(){
+        return URL+"/meeting/selectMyJoinMeetingByDate";
+    }
+    public String sendLeaveInformation(){
+        return URL+"/meeting/sendLeaveInformation";
+    }
 }

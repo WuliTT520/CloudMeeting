@@ -1,15 +1,43 @@
 package com.zhihui.imeeting.cloudmeeting.activity;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhihui.imeeting.cloudmeeting.R;
+import com.zhihui.imeeting.cloudmeeting.adapter.ReserveListViewAdapter;
+import com.zhihui.imeeting.cloudmeeting.controller.MyURL;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,8 +53,32 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private static final String TAG="HomeFragment";
     View view;
     Button myreserve;
+    private TextView tip;
+    private RecyclerView meetingList;
+    private Message msg;
+    private Handler handler;
+    private SharedPreferences sp;
+    private Calendar cal;
+    private String current_time;
+    private String next;
+    private String afterNext;
+
+    private String current_time_year;
+    private String current_time_month;
+    private String current_time_day;
+
+    private int sign;
+
+    private List<Integer> id;
+    private List<String> Ltopic;
+    private List<String> Lstatus;
+    private List<String> LmeetDate;
+    private List<String> Lbegin;
+    private List<String> Lover;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -66,10 +118,82 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, null);
         init();
         setListener();
+        getInfo(current_time);
+//        getInfo(next);
+//        getInfo(afterNext);
         return view;
     }
     public void init(){
+        /*获取当前时间*/
+        cal = Calendar.getInstance();
+        current_time_year = String.valueOf(cal.get(Calendar.YEAR));
+        current_time_month = String.format("%02d",cal.get(Calendar.MONTH)+1);
+        current_time_day = String.format("%02d",cal.get(Calendar.DATE));
+        current_time=current_time_year+"-"+current_time_month+"-"+current_time_day;
+        /*明天时间*/
+        cal.setTime(new Date(cal.getTime().getTime()+1000*60*60*24));
+        current_time_year = String.valueOf(cal.get(Calendar.YEAR));
+        current_time_month = String.format("%02d",cal.get(Calendar.MONTH)+1);
+        current_time_day = String.format("%02d",cal.get(Calendar.DATE));
+        next=current_time_year+"-"+current_time_month+"-"+current_time_day;
+        /*后天时间*/
+        cal.setTime(new Date(cal.getTime().getTime()+1000*60*60*24));
+        current_time_year = String.valueOf(cal.get(Calendar.YEAR));
+        current_time_month = String.format("%02d",cal.get(Calendar.MONTH)+1);
+        current_time_day = String.format("%02d",cal.get(Calendar.DATE));
+        afterNext=current_time_year+"-"+current_time_month+"-"+current_time_day;
+
+//        Toast.makeText(getActivity(),afterNext,Toast.LENGTH_LONG).show();
+        /*初始化*/
+        id=new ArrayList<>();
+        Ltopic=new ArrayList<>();
+        Lstatus=new ArrayList<>();
+        LmeetDate=new ArrayList<>();
+        Lbegin=new ArrayList<>();
+        Lover=new ArrayList<>();
+        sign=0;
+        sp=getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        tip=view.findViewById(R.id.tip);
         myreserve=view.findViewById(R.id.myreserve);
+        meetingList=view.findViewById(R.id.meetingList);
+        handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 200:
+                        if (id.size()==0){
+                            tip.setText("近3天没有会议哦");
+                        }else {
+                            meetingList.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            final ReserveListViewAdapter adapter = new ReserveListViewAdapter(getActivity());
+                            adapter.setBegin(Lbegin.toArray(new String[Lbegin.size()]));
+                            adapter.setMeetDate(LmeetDate.toArray(new String[LmeetDate.size()]));
+                            adapter.setOver(Lover.toArray(new String[Lover.size()]));
+                            adapter.setStatus(Lstatus.toArray(new String[Lstatus.size()]));
+                            adapter.setTopic(Ltopic.toArray(new String[Ltopic.size()]));
+                            adapter.setOnItemClickLitener(new ReserveListViewAdapter.OnItemClickLitener() {
+                                @Override
+                                public void onItemClick(View view, int position) {
+//                                    Toast.makeText(getActivity(),id.get(position)+"",Toast.LENGTH_LONG).show();
+                                Intent intent=new Intent(getActivity(),MeetingInfo5Activity.class);
+                                intent.putExtra("meetingId",id.get(position));
+                                startActivity(intent);
+                                }
+                            });
+                            meetingList.setAdapter(adapter);
+                        }
+//                        Toast.makeText(getActivity(),"显示列表",Toast.LENGTH_LONG).show();
+                        break;
+                    case 404:
+                        Toast.makeText(getActivity(),"网络错误",Toast.LENGTH_LONG).show();
+                        break;
+                    case 500:
+                        Toast.makeText(getActivity(),"数据错误",Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        };
     }
     public void setListener(){
         myreserve.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +201,80 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(),MyReserveActivity.class);
                 startActivity(intent);
+            }
+        });
+    }
+    public void getInfo(String time){
+        MyURL url=new MyURL();
+        final OkHttpClient client = new OkHttpClient();
+        RequestBody body=new FormBody.Builder()
+                .add("meetDate",time)
+                .build();
+        final Request request = new Request.Builder()
+                .addHeader("cookie", sp.getString("sessionID", ""))
+                .url(url.selectMyJoinMeetingByDate())
+                .post(body)
+                .build();
+        Log.w(TAG,time);
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                msg=Message.obtain();
+                msg.what=404;
+                handler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    String result = response.body().string();
+                    Log.w(TAG,result);
+                    JSONObject data =new JSONObject(result);
+                    boolean flag=data.getBoolean("status");
+                    if (flag){
+                        JSONArray info=data.getJSONArray("data");
+                        for(int i=0;i<info.length();i++){
+                            if (info.getJSONObject(i).getString("status").equals("已结束")){
+                                continue;
+                            }
+                            id.add(info.getJSONObject(i).getInt("id"));
+                            Ltopic.add(info.getJSONObject(i).getString("topic"));
+                            Lstatus.add(info.getJSONObject(i).getString("status"));
+                            /*处理数据*/
+//                            LmeetDate.add(info.getJSONObject(i).getString("meetDate"));
+                            String str=info.getJSONObject(i).getString("begin");
+                            LmeetDate.add(str.substring(0,10));
+//                            Log.w("时间",str.substring(0,10));
+                            Lbegin.add(str.substring(11,16));
+//                            Log.w("时间",str.substring(11,16));
+                            str=info.getJSONObject(i).getString("over");
+                            Lover.add(str.substring(11,16));
+//                            Log.w("时间",str.substring(11,16));
+
+                        }
+//                        Log.w(TAG,"sign="+sign);
+                        sign++;
+//                        Log.w(TAG,"sign="+sign);
+                        if (sign==1){
+                            getInfo(next);
+                        }
+                        if (sign==2){
+                            getInfo(afterNext);
+                        }
+                        if (sign==3){
+                            msg=Message.obtain();
+                            msg.what=200;
+                            handler.sendMessage(msg);
+                        }
+                    }else {
+                        msg=Message.obtain();
+                        msg.what=500;
+                        handler.sendMessage(msg);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
     }

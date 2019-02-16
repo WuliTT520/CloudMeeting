@@ -129,7 +129,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/myMetting"
+            android:id="@+id/myLeave"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/light"
@@ -139,7 +139,7 @@
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:src="@drawable/meeting" />
+                android:src="@drawable/leave" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -147,7 +147,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:text="我发起的会议"
+                android:text="请假管理"
                 android:textColor="@color/strongText"
                 android:textSize="18sp" />
 
