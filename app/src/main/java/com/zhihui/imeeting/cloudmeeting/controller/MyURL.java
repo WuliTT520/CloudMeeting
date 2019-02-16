@@ -99,4 +99,16 @@ public class MyURL {
     public String sendLeaveInformation(){
         return URL+"/meeting/sendLeaveInformation";
     }
+    public String CountLeaveInformation(){
+        return URL+"/meeting/CountLeaveInformation";
+    }
+    public String showOneMeetingLeaveInfo(){
+        return URL+"/meeting/showOneMeetingLeaveInfo";
+    }
+    public String agreeLeave(){
+        return URL+"/meeting/agreeLeave";
+    }
+    public String disagreeLeave(){
+        return URL+"/meeting/disagreeLeave";
+    }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.LeaveInfoActivity">
+    tools:context=".activity.ApprovalActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center_horizontal"
-            android:text="请假信息"
+            android:text="请假详情"
             android:textColor="@color/light"
             android:textSize="18sp" />
 
@@ -28,8 +28,20 @@
             android:src="@drawable/back" />
     </FrameLayout>
 
-    <ListView
-        android:id="@+id/info_list"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <ListView
+            android:id="@+id/info_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
 </LinearLayout>

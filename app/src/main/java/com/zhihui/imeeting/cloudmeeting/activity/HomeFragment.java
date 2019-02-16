@@ -18,16 +18,23 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
 import com.zhihui.imeeting.cloudmeeting.R;
 import com.zhihui.imeeting.cloudmeeting.adapter.ReserveListViewAdapter;
 import com.zhihui.imeeting.cloudmeeting.controller.MyURL;
+import com.zhihui.imeeting.cloudmeeting.helper.MyLoader;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -59,6 +66,8 @@ public class HomeFragment extends Fragment {
     Button myreserve;
     private TextView tip;
     private RecyclerView meetingList;
+    private Banner banner;
+    private Button room;
     private Message msg;
     private Handler handler;
     private SharedPreferences sp;
@@ -145,6 +154,29 @@ public class HomeFragment extends Fragment {
 
 //        Toast.makeText(getActivity(),afterNext,Toast.LENGTH_LONG).show();
         /*初始化*/
+
+        Integer[] image={R.drawable.adv01,R.drawable.adv02,R.drawable.adv03};
+        List<Integer> images=Arrays.asList(image);
+        String[] titles={"欢迎使用会议室管理助手","预订会议室，就用会议室管理系统","会议室管理助手"};
+        banner =view.findViewById(R.id.banner);
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+        //设置图片加载器
+        banner.setImageLoader(new MyLoader());
+        //设置图片集合
+        banner.setImages(images);
+        //设置banner动画效果
+        banner.setBannerAnimation(Transformer.DepthPage);
+        //设置标题集合（当banner样式有显示title时）
+        banner.setBannerTitles(Arrays.asList(titles));
+        //设置自动轮播，默认为true
+        banner.isAutoPlay(true);
+        //设置轮播时间
+        banner.setDelayTime(3*1000);
+        //设置指示器位置（当banner模式中有指示器时）
+        banner.setIndicatorGravity(BannerConfig.CENTER);
+        //banner设置方法全部调用完毕时最后调用
+        banner.start();
+
         id=new ArrayList<>();
         Ltopic=new ArrayList<>();
         Lstatus=new ArrayList<>();
@@ -154,6 +186,7 @@ public class HomeFragment extends Fragment {
         sign=0;
         sp=getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         tip=view.findViewById(R.id.tip);
+        room=view.findViewById(R.id.room_info);
         myreserve=view.findViewById(R.id.myreserve);
         meetingList=view.findViewById(R.id.meetingList);
         handler=new Handler(){
@@ -200,6 +233,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(),MyReserveActivity.class);
+                startActivity(intent);
+            }
+        });
+        room.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),MeetingRoomInfoActivity.class);
                 startActivity(intent);
             }
         });

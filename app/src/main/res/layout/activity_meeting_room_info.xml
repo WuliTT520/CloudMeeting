@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.LeaveInfoActivity">
+    tools:context=".activity.MeetingRoomInfoActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center_horizontal"
-            android:text="请假信息"
+            android:text="会议室信息"
             android:textColor="@color/light"
             android:textSize="18sp" />
 
@@ -28,8 +28,34 @@
             android:src="@drawable/back" />
     </FrameLayout>
 
-    <ListView
-        android:id="@+id/info_list"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/underline_gray"
+        android:orientation="horizontal"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/border_blue"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="设备" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/border_blue"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="人数" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/meetroom_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 </LinearLayout>
