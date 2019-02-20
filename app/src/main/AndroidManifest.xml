@@ -63,7 +63,14 @@
         <activity android:name=".activity.MeetingInfo5Activity" />
         <activity android:name=".activity.LeaveInfoActivity" />
         <activity android:name=".activity.ApprovalActivity" />
-        <activity android:name=".activity.MeetingRoomInfoActivity"></activity>
+        <activity android:name=".activity.MeetingRoomInfoActivity" />
+        <activity android:name=".activity.MeetingReserverActivity" />
+        <activity android:name=".activity.MeetingInfo6Activity" />
+        <activity android:name=".activity.MeetingInfo7Activity" />
+        <activity android:name=".activity.QiangActivity" />
+        <activity android:name=".activity.DiaoActivity" />
+        <activity android:name=".activity.SingInActivity" />
+        <activity android:name=".activity.SingInfoActivity"></activity>
     </application>
 
 </manifest>

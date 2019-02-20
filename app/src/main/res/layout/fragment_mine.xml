@@ -127,7 +127,35 @@
                 android:layout_marginRight="15dp"
                 android:src="@drawable/enter" />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/sing_info"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/light"
+            android:orientation="horizontal">
 
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/qiandao" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="签到信息"
+                android:textColor="@color/strongText"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/enter" />
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/myLeave"
             android:layout_width="match_parent"

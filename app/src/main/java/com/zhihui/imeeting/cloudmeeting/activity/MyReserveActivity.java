@@ -70,7 +70,6 @@ public class MyReserveActivity extends BaseActivity {
     protected void onCreatee() {
         init();
         setListener();
-
     }
 
     public void init(){

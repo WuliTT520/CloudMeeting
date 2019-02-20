@@ -111,4 +111,23 @@ public class MyURL {
     public String disagreeLeave(){
         return URL+"/meeting/disagreeLeave";
     }
+    public String oneRoomReserver(){
+        return URL+"/meeting/oneRoomReserver";
+    }
+    public String robMeeting(){
+        return URL+"/meeting/robMeeting";
+    }
+    public String coordinateMeeting(){
+        return URL+"/meeting/coordinateMeeting";
+    }
+    public String toJoinPersonIndex(){
+        return URL+"/joinPerson/toJoinPersonIndex";
+    }
+    public String showOneMeeting(){
+        return URL+"/joinPerson/showOneMeeting";
+    }
+    public String remindOne(){
+        return URL+"/joinPerson/remindOne";
+    }
+
 }
