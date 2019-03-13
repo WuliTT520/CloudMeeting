@@ -53,7 +53,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     WelcomeActivity.this.finish();
                 }
             }
-        },1000*3);
+        },1000*1);
 
     }
 
