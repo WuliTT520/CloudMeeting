@@ -70,7 +70,15 @@
         <activity android:name=".activity.QiangActivity" />
         <activity android:name=".activity.DiaoActivity" />
         <activity android:name=".activity.SingInActivity" />
-        <activity android:name=".activity.SingInfoActivity"></activity>
+        <activity android:name=".activity.SingInfoActivity" />
+        <activity android:name=".activity.LiHuiActivity" />
+        <activity android:name=".activity.OpenDoorActivity" />
+        <activity android:name=".activity.BaoXiuActivity" />
+        <activity android:name=".activity.YiChangActivity" />
+        <activity android:name=".activity.LiHuiAddActivity" />
+        <activity android:name=".activity.FileListActivity" />
+        <activity android:name=".activity.DaGangActivity" />
+        <activity android:name=".activity.RenWuActivity"></activity>
     </application>
 
 </manifest>

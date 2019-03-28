@@ -98,7 +98,9 @@ public class MeetingRoomInfoActivity extends Activity {
             toolName=new String[tool.length()];
             for(int i=0;i<tool.length();i++){
                 toolId[i]=tool.getJSONObject(i).getInt("id");
+//                Log.w("id",toolId[i]+"");
                 toolName[i]=tool.getJSONObject(i).getString("name");
+//                Log.w("name",toolName[i]+"");
             }
             JSONArray array=data.getJSONArray(4);
             tools=new String[array.length()];
@@ -109,7 +111,9 @@ public class MeetingRoomInfoActivity extends Activity {
                 for(int j=0;j<info.length();j++){
                     int meetroomId=info.getJSONObject(j).getInt("meetroomId");
                     int equipId=info.getJSONObject(j).getInt("equipId");
+//                    Log.w("int equipid",equipId+"");
                     key= Arrays.binarySearch(id,meetroomId);
+//                    Log.w("Arrays.binarySearch(toolId,equipId)",Arrays.binarySearch(toolId,equipId)+"");
                     str+=toolName[Arrays.binarySearch(toolId,equipId)]+" ";
                 }
                 tools[key]=str;

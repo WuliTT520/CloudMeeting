@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -41,34 +42,94 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="4dp"
-                 />
+                android:layout_marginBottom="4dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="6dp">
 
-                <Button
+                <LinearLayout
                     android:id="@+id/myreserve"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/common_button"
-                    android:text="我的预订"
-                    android:textColor="@color/light" />
+                    android:orientation="vertical">
 
-                <Button
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:layout_marginBottom="4dp"
+                        android:src="@drawable/huiyiyuding" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="我的预订" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/room_info"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/common_button"
-                    android:text="会议室情况"
-                    android:textColor="@color/light" />
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:layout_marginBottom="4dp"
+                        android:src="@drawable/huiyishi" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="会议室情况" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/meizhou"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:layout_marginBottom="4dp"
+                        android:src="@drawable/meizhoulihui" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="每周例会" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/kaimeng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:layout_marginBottom="4dp"
+                        android:src="@drawable/kaimeng" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="开门申请" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView

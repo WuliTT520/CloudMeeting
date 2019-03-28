@@ -12,13 +12,18 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.zhouwei.library.CustomPopWindow;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.zhihui.imeeting.cloudmeeting.R;
 import com.zhihui.imeeting.cloudmeeting.controller.MyURL;
 
@@ -51,6 +56,8 @@ public class MeetingInfo5Activity extends Activity {
     private Message msg;
     private Handler handler;
     private SharedPreferences sp;
+    private TextView more;
+
 
     private int meetingId;
     private String topic;
@@ -76,7 +83,7 @@ public class MeetingInfo5Activity extends Activity {
     public void init(){
         Intent intent=getIntent();
         meetingId=intent.getIntExtra("meetingId",0);
-        Toast.makeText(MeetingInfo5Activity.this,meetingId+"",Toast.LENGTH_LONG).show();
+//        Toast.makeText(MeetingInfo5Activity.this,meetingId+"",Toast.LENGTH_LONG).show();
         back=findViewById(R.id.back);
         topic_tv=findViewById(R.id.topic_tv);
         beginTime_tv=findViewById(R.id.beginTime_tv);
@@ -87,6 +94,7 @@ public class MeetingInfo5Activity extends Activity {
         joinPeopleNum_tv=findViewById(R.id.joinPeopleNum_tv);
         leave=findViewById(R.id.leave);
         content_tv=findViewById(R.id.content_tv);
+        more=findViewById(R.id.more);
         sp=getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         handler=new Handler(){
             @Override
@@ -132,6 +140,19 @@ public class MeetingInfo5Activity extends Activity {
                 intent.putExtra("outsideJoinPersonsName",outsideJoinPersonsName);
                 intent.putExtra("outsideJoinPersonsPhone",outsideJoinPersonsPhone);
                 startActivity(intent);
+            }
+        });
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View contentView = LayoutInflater.from(MeetingInfo5Activity.this).inflate(R.layout.popmenu,null);
+                //处理popWindow 显示内容
+                handleLogic(contentView);
+                //创建并显示popWindow
+                CustomPopWindow mCustomPopWindow= new CustomPopWindow.PopupWindowBuilder(MeetingInfo5Activity.this)
+                        .setView(contentView)
+                        .create()
+                        .showAsDropDown(more,0,0);
             }
         });
         leave.setOnClickListener(new View.OnClickListener() {
@@ -213,6 +234,7 @@ public class MeetingInfo5Activity extends Activity {
 
             }
         });
+
     }
     public void getInfo(){
         MyURL url=new MyURL();
@@ -274,6 +296,60 @@ public class MeetingInfo5Activity extends Activity {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
+            }
+        });
+    }
+    private void handleLogic(View contentView) {
+//        ProgressBar progressBar = (ProgressBar)contentView.findViewById(R.id.progress);
+//        Sprite doubleBounce = new DoubleBounce();
+//        progressBar.setIndeterminateDrawable(doubleBounce);
+
+        contentView.findViewById(R.id.wenjian).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final View dialogview = LayoutInflater.from(MeetingInfo5Activity.this).inflate(R.layout.loading, null);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MeetingInfo5Activity.this);
+                builder.setView(dialogview);
+                final AlertDialog dialog=builder.create();
+
+                dialog.show();
+                WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+                params.width = MeetingInfo5Activity.this.getWindowManager().getDefaultDisplay().getWidth();
+                params.height = 600 ;
+                params.width=600;
+                dialog.getWindow().setAttributes(params);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        TextView text= dialogview.findViewById(R.id.text);
+                        text.setText("成功");
+                        text.setTextColor(MeetingInfo5Activity.this.getResources().getColor(R.color.pass));
+                    }
+                },1000*1);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent=new Intent(MeetingInfo5Activity.this,FileListActivity.class);
+                        startActivity(intent);
+                        dialog.hide();
+                    }
+                },1200*1);
+
+//                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            }
+        });
+        contentView.findViewById(R.id.renwu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MeetingInfo5Activity.this,RenWuActivity.class);
+                startActivity(intent);
+            }
+        });
+        contentView.findViewById(R.id.dagang).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MeetingInfo5Activity.this,DaGangActivity.class);
+                startActivity(intent);
             }
         });
     }

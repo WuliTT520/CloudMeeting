@@ -66,7 +66,7 @@ public class MeetingInfoActivity extends Activity {
     public void init(){
         Intent intent=getIntent();
         meetingId=intent.getIntExtra("meetingId",0);
-        Toast.makeText(MeetingInfoActivity.this,meetingId+"",Toast.LENGTH_LONG).show();
+//        Toast.makeText(MeetingInfoActivity.this,meetingId+"",Toast.LENGTH_LONG).show();
         back=findViewById(R.id.back);
         topic_tv=findViewById(R.id.topic_tv);
         beginTime_tv=findViewById(R.id.beginTime_tv);

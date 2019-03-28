@@ -157,7 +157,7 @@ public class AddActivity extends Activity {
         current_time_minute = String.valueOf(cal.get(Calendar.MINUTE));
         current_time=current_time_year+"年"+current_time_month+"月"+current_time_day+
                 "日"+current_time_hour+":"+current_time_minute;
-        Toast.makeText(AddActivity.this,current_time,Toast.LENGTH_LONG).show();
+//        Toast.makeText(AddActivity.this,current_time,Toast.LENGTH_LONG).show();
         beginTime1.setText(current_time_year+"年"+current_time_month+"月"+current_time_day+ "日");
         beginTime2.setText((1+Integer.parseInt(current_time_hour))%24+":00");
         overTime1.setText(current_time_year+"年"+current_time_month+"月"+current_time_day+ "日");

@@ -302,5 +302,12 @@ public class MeetingInfo3Activity extends Activity {
                 System.exit(0);
             }
         });
+        contentView.findViewById(R.id.baoxiu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MeetingInfo3Activity.this,BaoXiuActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

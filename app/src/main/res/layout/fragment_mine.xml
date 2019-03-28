@@ -248,6 +248,35 @@
         </LinearLayout>
 
 
+        <LinearLayout
+            android:id="@+id/yichang"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/light"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/yichang" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="异常记录"
+                android:textColor="@color/strongText"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/enter" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/logout"

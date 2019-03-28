@@ -56,6 +56,7 @@ public class MineFragment extends Fragment {
     private LinearLayout change_pwd;
     private LinearLayout myLeave;
     private LinearLayout sing_info;
+    private LinearLayout yichang;
     View view;
     private Button logout;
     SharedPreferences sp;
@@ -110,7 +111,7 @@ public class MineFragment extends Fragment {
     }
 
     public void init(){
-
+        yichang=view.findViewById(R.id.yichang);
         logout=view.findViewById(R.id.logout);
         Tname=view.findViewById(R.id.name);
         Tworknum=view.findViewById(R.id.workNum);
@@ -145,7 +146,13 @@ public class MineFragment extends Fragment {
         };
     }
     public void setListener(){
-
+        yichang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),YiChangActivity.class);
+                startActivity(intent);
+            }
+        });
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

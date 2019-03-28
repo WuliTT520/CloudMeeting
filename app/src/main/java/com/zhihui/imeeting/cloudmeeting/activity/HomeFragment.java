@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,11 +30,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -63,11 +61,11 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG="HomeFragment";
     View view;
-    Button myreserve;
+    LinearLayout myreserve;
     private TextView tip;
     private RecyclerView meetingList;
     private Banner banner;
-    private Button room;
+    private LinearLayout room;
     private Message msg;
     private Handler handler;
     private SharedPreferences sp;
@@ -75,6 +73,8 @@ public class HomeFragment extends Fragment {
     private String current_time;
     private String next;
     private String afterNext;
+    private LinearLayout meizhou;
+    private LinearLayout kaimeng;
 
     private String current_time_year;
     private String current_time_month;
@@ -189,6 +189,8 @@ public class HomeFragment extends Fragment {
         room=view.findViewById(R.id.room_info);
         myreserve=view.findViewById(R.id.myreserve);
         meetingList=view.findViewById(R.id.meetingList);
+        meizhou=view.findViewById(R.id.meizhou);
+        kaimeng=view.findViewById(R.id.kaimeng);
         handler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -240,6 +242,20 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(),MeetingRoomInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+        meizhou.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),LiHuiActivity.class);
+                startActivity(intent);
+            }
+        });
+        kaimeng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),OpenDoorActivity.class);
                 startActivity(intent);
             }
         });
