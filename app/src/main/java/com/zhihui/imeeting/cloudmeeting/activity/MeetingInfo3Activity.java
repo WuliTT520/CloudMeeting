@@ -138,7 +138,7 @@ public class MeetingInfo3Activity extends Activity {
         more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(MeetingInfo3Activity.this,"点击了",Toast.LENGTH_LONG).show();
+                Toast.makeText(MeetingInfo3Activity.this,"点击了",Toast.LENGTH_LONG).show();
                 View contentView = LayoutInflater.from(MeetingInfo3Activity.this).inflate(R.layout.popwindow,null);
                 //处理popWindow 显示内容
                 handleLogic(contentView);
@@ -277,6 +277,7 @@ public class MeetingInfo3Activity extends Activity {
     }
 
     private void handleLogic(View contentView) {
+        Log.w(TAG,"handleLogic");
         contentView.findViewById(R.id.change).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -295,19 +296,23 @@ public class MeetingInfo3Activity extends Activity {
                 startActivityForResult(intent,10);
             }
         });
+        Log.w(TAG,"change");
         contentView.findViewById(R.id.apply).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(MeetingInfo3Activity.this,"申请列表",Toast.LENGTH_LONG).show();
+                Toast.makeText(MeetingInfo3Activity.this,"申请列表",Toast.LENGTH_LONG).show();
                 System.exit(0);
             }
         });
+        Log.w(TAG,"apply");
         contentView.findViewById(R.id.baoxiu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(MeetingInfo3Activity.this,"报修",Toast.LENGTH_LONG).show();
                 Intent intent=new Intent(MeetingInfo3Activity.this,BaoXiuActivity.class);
                 startActivity(intent);
             }
         });
+        Log.w(TAG,"baoxiu");
     }
 }

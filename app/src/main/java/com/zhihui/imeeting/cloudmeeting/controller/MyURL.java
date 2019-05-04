@@ -129,5 +129,7 @@ public class MyURL {
     public String remindOne(){
         return URL+"/joinPerson/remindOne";
     }
-
+    public String getOneRoomEquip(){
+        return URL+"/meetRoom/getOneRoomEquip";
+    }
 }

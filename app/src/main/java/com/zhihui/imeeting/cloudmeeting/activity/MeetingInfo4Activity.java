@@ -301,5 +301,14 @@ public class MeetingInfo4Activity extends Activity {
                 System.exit(0);
             }
         });
+        contentView.findViewById(R.id.baoxiu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Toast.makeText(MeetingInfo4Activity.this,"报修",Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(MeetingInfo4Activity.this,BaoXiuActivity.class);
+                intent.putExtra("meetRoomId",meetRoomId);
+                startActivity(intent);
+            }
+        });
     }
 }

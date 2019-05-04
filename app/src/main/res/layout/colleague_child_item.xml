@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/light">
+
+    <TextView
+        android:id="@+id/pic"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/pic_bg"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="桥东"
+        android:textColor="@color/light" />
 
     <TextView
         android:id="@+id/people_name"
@@ -11,7 +22,6 @@
         android:layout_weight="1"
         android:background="@drawable/underline_gray"
         android:gravity="center_vertical"
-        android:paddingLeft="40dp"
         android:text="张三"
         android:textColor="@android:color/black"
         android:textSize="18sp" />

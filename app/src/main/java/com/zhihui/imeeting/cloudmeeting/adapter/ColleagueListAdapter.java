@@ -116,13 +116,18 @@ public class ColleagueListAdapter extends BaseExpandableListAdapter {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.colleague_child_item,viewGroup,false);
             childViewHolder = new ChildViewHolder();
             childViewHolder.tvTitle = (TextView)view.findViewById(R.id.people_name);
-
+            childViewHolder.tvPic = (TextView)view.findViewById(R.id.pic);
             view.setTag(childViewHolder);
         }else {
             childViewHolder = (ChildViewHolder)view.getTag();
         }
 
         childViewHolder.tvTitle.setText(childString[i].get(i1).toString());
+        if (childString[i].get(i1).toString().length()>2){
+            childViewHolder.tvPic.setText(childString[i].get(i1).toString().substring(childString[i].get(i1).toString().length()-2));
+        }else {
+            childViewHolder.tvPic.setText(childString[i].get(i1).toString());
+        }
         childViewHolder.tvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,6 +150,7 @@ public class ColleagueListAdapter extends BaseExpandableListAdapter {
     }
 
     static class ChildViewHolder {
+        TextView tvPic;
         TextView tvTitle;
     }
 }
