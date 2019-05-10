@@ -132,4 +132,10 @@ public class MyURL {
     public String getOneRoomEquip(){
         return URL+"/meetRoom/getOneRoomEquip";
     }
+    public String selectAll(){
+        return URL+"/equip/selectAll";
+    }
+    public String recommandMeetRoom(){
+        return URL+"/meeting/recommandMeetRoom";
+    }
 }

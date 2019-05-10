@@ -155,7 +155,8 @@ public class MainActivity extends AppCompatActivity {
 //                AddFragment addFragment=new AddFragment();
 //                transaction.replace(R.id.show,addFragment);
 //                transaction.commit();
-                Intent intent=new Intent(MainActivity.this, AddActivity.class);
+//                Intent intent=new Intent(MainActivity.this, AddActivity.class);
+                Intent intent=new Intent(MainActivity.this, AIActivity.class);
                 startActivity(intent);
             }
         });

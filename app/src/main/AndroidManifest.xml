@@ -78,7 +78,8 @@
         <activity android:name=".activity.LiHuiAddActivity" />
         <activity android:name=".activity.FileListActivity" />
         <activity android:name=".activity.DaGangActivity" />
-        <activity android:name=".activity.RenWuActivity"></activity>
+        <activity android:name=".activity.RenWuActivity" />
+        <activity android:name=".activity.AIActivity"></activity>
     </application>
 
 </manifest>
