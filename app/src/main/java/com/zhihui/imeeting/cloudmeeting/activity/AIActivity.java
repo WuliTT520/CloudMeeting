@@ -1,7 +1,9 @@
 package com.zhihui.imeeting.cloudmeeting.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.zhihui.imeeting.cloudmeeting.entity.RoomInfo;
 import com.zhihui.imeeting.cloudmeeting.widget.DragGridView;
 import com.zhihui.imeeting.cloudmeeting.R;
 import com.zhihui.imeeting.cloudmeeting.controller.MyURL;
@@ -50,6 +53,10 @@ public class AIActivity extends Activity {
     private int equip_id[];
     private double weight[];
     private int num;
+    private ProgressDialog waitingDialog;
+
+    private ArrayList<RoomInfo> roomInfos=new ArrayList<>();
+
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     @Override
@@ -101,6 +108,10 @@ public class AIActivity extends Activity {
                         break;
                     case 201:
                         /*获取推荐会议室成功，跳转并显示推荐的会议室信息*/
+                        waitingDialog.cancel();
+                        Intent intent=new Intent(AIActivity.this,AiChoseRoomActivity.class);
+                        intent.putExtra("roominfos",roomInfos);
+                        startActivity(intent);
                         break;
                 }
             }
@@ -192,7 +203,8 @@ public class AIActivity extends Activity {
                 }else if ((num=Integer.parseInt(peoplenum.getText().toString()))<1){
                     Toast.makeText(AIActivity.this,"开会人数不能小于1",Toast.LENGTH_LONG).show();
                 }else {
-                    Toast.makeText(AIActivity.this,"ok!",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(AIActivity.this,"ok!",Toast.LENGTH_LONG).show();
+                    showWaitingDialog();
                     finalEquips=sortView.getDefaultItems();
                     try {
                         JSONObject jsonObject=new JSONObject();
@@ -240,18 +252,27 @@ public class AIActivity extends Activity {
                                     JSONObject data = new JSONObject(result);
                                     boolean flag = data.getBoolean("status");
                                     if (flag){
+                                        JSONArray array=data.getJSONArray("data");
 
+                                        for(int i=0;i<array.length();i++){
+                                            JSONObject item=array.getJSONObject(i);
+                                            JSONArray eq=item.getJSONArray("equips");
+                                            ArrayList<String> list=new ArrayList<>();
+                                            for(int j=0;j<eq.length();j++){
+                                                list.add(eq.get(j).toString());
 
+                                            }
+                                            RoomInfo info=new RoomInfo();
+                                            info.setMeetRoomId(item.getInt("meetRoomId"));
+                                            info.setMeetRoomName(item.getString("meetRoomName"));
+                                            info.setSimilar(item.getString("similar"));
+                                            info.setContain(item.getInt("contain"));
+                                            info.setNum(item.getString("num"));
+                                            info.setEquips(list);
+//                                            Log.w(TAG,info.toString());
+                                            roomInfos.add(info);
 
-
-
-
-
-
-
-
-
-
+                                        }
                                         msg=Message.obtain();
                                         msg.what=201;
                                         handler.sendMessage(msg);
@@ -282,5 +303,13 @@ public class AIActivity extends Activity {
             }
         }
         return -1;
+    }
+
+    private void showWaitingDialog() {
+        waitingDialog= new ProgressDialog(AIActivity.this);
+        waitingDialog.setMessage("请等待...");
+        waitingDialog.setIndeterminate(true);
+        waitingDialog.setCancelable(false);
+        waitingDialog.show();
     }
 }

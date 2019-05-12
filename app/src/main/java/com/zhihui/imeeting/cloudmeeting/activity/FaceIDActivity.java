@@ -86,7 +86,7 @@ public class FaceIDActivity extends AppCompatActivity {
     private Integer cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
     private TextureView previewView ;//相机预览显示控件
     private FaceRectView faceRectView;//人脸侦测帮助框
-
+    private boolean ispost=false;
     /**
      * 所需的所有权限信息
      */
@@ -257,72 +257,77 @@ public class FaceIDActivity extends AppCompatActivity {
                     FaceFeature faceFeatures = new FaceFeature();
                     int extractFaceFeatureCodes;
                     //从图片解析出人脸特征数据
-                    long frStartTime = System.currentTimeMillis();
-                    extractFaceFeatureCodes = faceEngine.extractFaceFeature(nv21, previewSize.width, previewSize.height, FaceEngine.CP_PAF_NV21, faceInfoList.get(0), faceFeatures);
-                    Log.i("特征值提取: ", "error:"+extractFaceFeatureCodes);
-                    if(extractFaceFeatureCodes == ErrorInfo.MOK) {
-                        cameraHelper.stop();
-                        note.setText("正在保存至云端");
-                        faceFeatureData = faceFeatures.getFeatureData();
+                    if(!ispost){
+                        long frStartTime = System.currentTimeMillis();
+                        extractFaceFeatureCodes = faceEngine.extractFaceFeature(nv21, previewSize.width, previewSize.height, FaceEngine.CP_PAF_NV21, faceInfoList.get(0), faceFeatures);
+                        Log.i("特征值提取: ", "error:"+extractFaceFeatureCodes);
+                        if(extractFaceFeatureCodes == ErrorInfo.MOK) {
+                            cameraHelper.stop();
+                            note.setText("正在保存至云端");
+                            faceFeatureData = faceFeatures.getFeatureData();
 //                        System.out.print("特征值:");
 //                        System.out.println(bytesToHex(faceFeatureData));
-                        String faceDetail=bytesToHex(faceFeatureData);
-                        Bitmap bitmap=previewView.getBitmap();
-                        getFile(bitmap);
-                        final OkHttpClient client = new OkHttpClient();
-                        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-                        builder.addFormDataPart("fileupload","temp.jpg",RequestBody.create(MediaType.parse(".jpg"), file));
-                        builder.addFormDataPart("faceDetail",faceDetail);
+                            String faceDetail=bytesToHex(faceFeatureData);
+                            Bitmap bitmap=previewView.getBitmap();
+                            getFile(bitmap);
+                            final OkHttpClient client = new OkHttpClient();
+                            MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                            builder.addFormDataPart("fileupload","temp.jpg",RequestBody.create(MediaType.parse(".jpg"), file));
+                            builder.addFormDataPart("faceDetail",faceDetail);
 //                        builder.
-                        Log.w("特征值",faceDetail);
-                        final Request request;
-                        if (flag2){
-                            request=new Request.Builder()
-                                    .addHeader("cookie", sp.getString("sessionID", ""))
-                                    .url(new MyURL().insert())
-                                    .post(builder.build())
-                                    .build();
-                        }else {
-                            request=new Request.Builder()
-                                    .addHeader("cookie", sp.getString("sessionID", ""))
-                                    .url(new MyURL().update())
-                                    .post(builder.build())
-                                    .build();
-                        }
-
-                        Call call = client.newCall(request);
-                        call.enqueue(new Callback() {
-                            @Override
-                            public void onFailure(Call call, IOException e) {
-                                msg=Message.obtain();
-                                msg.what=404;
-                                handler.sendMessage(msg);
+                            Log.w("特征值",faceDetail);
+                            final Request request;
+                            if (flag2){
+                                request=new Request.Builder()
+                                        .addHeader("cookie", sp.getString("sessionID", ""))
+                                        .url(new MyURL().insert())
+                                        .post(builder.build())
+                                        .build();
+                            }else {
+                                request=new Request.Builder()
+                                        .addHeader("cookie", sp.getString("sessionID", ""))
+                                        .url(new MyURL().update())
+                                        .post(builder.build())
+                                        .build();
                             }
 
-                            @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-                                try {
-                                    String result = response.body().string();
-                                    Log.w(TAG,result);
-                                    JSONObject data =new JSONObject(result);
-                                    boolean flag=data.getBoolean("status");
-                                    if (flag){
-                                        msg=Message.obtain();
-                                        msg.what=200;
-                                        handler.sendMessage(msg);
-                                    }else {
-                                        msg=Message.obtain();
-                                        msg.what=500;
-                                        handler.sendMessage(msg);
-                                    }
-                                }catch (Exception e){
-                                    e.printStackTrace();
+                            Call call = client.newCall(request);
+                            call.enqueue(new Callback() {
+                                @Override
+                                public void onFailure(Call call, IOException e) {
+                                    msg=Message.obtain();
+                                    msg.what=404;
+                                    handler.sendMessage(msg);
                                 }
-                            }
-                        });
+
+                                @Override
+                                public void onResponse(Call call, Response response) throws IOException {
+                                    try {
+                                        String result = response.body().string();
+                                        Log.w(TAG,result);
+                                        JSONObject data =new JSONObject(result);
+                                        boolean flag=data.getBoolean("status");
+                                        if (flag){
+                                            msg=Message.obtain();
+                                            msg.what=200;
+                                            handler.sendMessage(msg);
+                                        }else {
+                                            msg=Message.obtain();
+                                            msg.what=500;
+                                            handler.sendMessage(msg);
+                                        }
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                            Log.w(TAG,"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            ispost=true;
 //
 //                        System.exit(0);
-                        return;
+                            return;
+                        }
+
                     }
 
 

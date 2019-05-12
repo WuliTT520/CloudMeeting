@@ -25,6 +25,7 @@ public class MeetingRoomInfoActivity extends Activity {
     private static final String TAG="MeetingRoomInfoActivity";
     private ImageView back;
     private RecyclerView meetroom_list;
+
     private int[] id;
     private String[] name;
     private String[] place;
