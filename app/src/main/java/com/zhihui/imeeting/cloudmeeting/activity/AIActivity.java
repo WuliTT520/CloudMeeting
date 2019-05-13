@@ -210,12 +210,19 @@ public class AIActivity extends Activity {
                         JSONObject jsonObject=new JSONObject();
                         jsonObject.put("contain",num);
                         equip_id=new int[finalEquips.size()];
-                        weight=new double[finalEquips.size()];
+//                        weight=new double[finalEquips.size()];
+                        /*有权值后删除*/
+                        weight=new double[finalEquips.size()+1];
                         for(int j=0;j<equip_id.length;j++){
                             equip_id[j]=choseEquips.get(search(finalEquips.get(j))).getId();
-                            weight[j]=equip_id.length-j;
+//                            weight[j]=equip_id.length-j;
+                            /*有权值后删除*/
+                            weight[j]=1;
                             Log.w(TAG,"id:"+equip_id[j]+"weight:"+weight[j]);
                         }
+                        /*有权值后删除*/
+                        weight[finalEquips.size()]=1;
+
                         JSONArray eqid=new JSONArray();
                         for(int k=0;k<equip_id.length;k++){
                             eqid.put(equip_id[k]);
@@ -226,7 +233,8 @@ public class AIActivity extends Activity {
                         }
                         jsonObject.put("equips",eqid);
                         jsonObject.put("weight",quanzhi);
-//                        Log.w(TAG,jsonObject.toString());
+                        Log.w(TAG,jsonObject.toString());
+
                         MyURL url=new MyURL();
                         final OkHttpClient client = new OkHttpClient();
                         RequestBody body = RequestBody.create(JSON, jsonObject.toString());
@@ -256,10 +264,11 @@ public class AIActivity extends Activity {
 
                                         for(int i=0;i<array.length();i++){
                                             JSONObject item=array.getJSONObject(i);
-                                            JSONArray eq=item.getJSONArray("equips");
+                                            JSONArray eq=item.getJSONArray("meetroomEquips");
                                             ArrayList<String> list=new ArrayList<>();
                                             for(int j=0;j<eq.length();j++){
-                                                list.add(eq.get(j).toString());
+//                                                JSONObject equip_item=eq.getJSONObject(j);
+                                                list.add(eq.getJSONObject(j).getJSONObject("equip").getString("name"));
 
                                             }
                                             RoomInfo info=new RoomInfo();
@@ -308,7 +317,7 @@ public class AIActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.w(TAG,"返回值:"+resultCode);
+//        Log.w(TAG,"返回值:"+resultCode);
         switch (resultCode){
             case 100:
                 finish();
