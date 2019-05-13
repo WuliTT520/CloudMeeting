@@ -29,8 +29,8 @@ public class AiMeetingRoomInfoAdapter extends RecyclerView.Adapter<AiMeetingRoom
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        AiMeetingRoomInfoAdapter.MyViewHolder viewHolder=new AiMeetingRoomInfoAdapter.MyViewHolder(LayoutInflater.from(context).inflate(R.layout.meetingroom_info, viewGroup,false));
-        Log.w("AiMeeting","4564564564654564654");
+        AiMeetingRoomInfoAdapter.MyViewHolder viewHolder=new AiMeetingRoomInfoAdapter.MyViewHolder(LayoutInflater.from(context).inflate(R.layout.aimeetingroom_item, viewGroup,false));
+//        Log.w("AiMeeting","4564564564654564654");
         return viewHolder;
     }
 
@@ -41,10 +41,12 @@ public class AiMeetingRoomInfoAdapter extends RecyclerView.Adapter<AiMeetingRoom
         TextView tool_TV=myViewHolder.tool;
         TextView address_TV=myViewHolder.address;
 //        TextView status_TV=myViewHolder.status;
+        TextView similar_TV=myViewHolder.similar;
         room_name_TV.setText(meetRoomName[i]);
         number_TV.setText("可容纳人数："+contain[i]);
         tool_TV.setText("拥有器材："+equips[i]);
         address_TV.setText("地址："+num[i]);
+        similar_TV.setText("匹配度："+similar[i]);
         if (mOnItemClickLitener != null) {
             myViewHolder.root.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,7 +73,7 @@ public class AiMeetingRoomInfoAdapter extends RecyclerView.Adapter<AiMeetingRoom
         TextView number;
         TextView tool;
         TextView address;
-        TextView status;
+        TextView similar;
         public MyViewHolder(View itemView) {
             super(itemView);
 //            textView = (TextView) itemView.findViewById(R.id.tv_);
@@ -80,7 +82,7 @@ public class AiMeetingRoomInfoAdapter extends RecyclerView.Adapter<AiMeetingRoom
             number=itemView.findViewById(R.id.number);
             tool=itemView.findViewById(R.id.tool);
             address=itemView.findViewById(R.id.address);
-            status=itemView.findViewById(R.id.status);
+            similar=itemView.findViewById(R.id.similar);
         }
 
     }

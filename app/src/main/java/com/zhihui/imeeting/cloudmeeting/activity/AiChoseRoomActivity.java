@@ -42,6 +42,7 @@ public class AiChoseRoomActivity extends Activity {
     private int contain[];
     private String place[];
     private String tools[];
+    private String sim[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class AiChoseRoomActivity extends Activity {
     }
     public void init(){
         sp=this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        Intent intent=getIntent();
+        final Intent intent=getIntent();
         roomInfos=intent.getParcelableArrayListExtra("roominfos");
         back=findViewById(R.id.back);
         meetroom_list=findViewById(R.id.meetroom_list);
@@ -62,6 +63,7 @@ public class AiChoseRoomActivity extends Activity {
         contain=new int[roomInfos.size()];
         place=new String[roomInfos.size()];
         tools=new String[roomInfos.size()];
+        sim=new String[roomInfos.size()];
 
         for(int i=0;i<id.length;i++){
             RoomInfo roomInfo=roomInfos.get(i);
@@ -69,6 +71,7 @@ public class AiChoseRoomActivity extends Activity {
             name[i]=roomInfo.getMeetRoomName();
             contain[i]=roomInfo.getContain();
             place[i]=roomInfo.getNum();
+            sim[i]=roomInfo.getSimilar();
             ArrayList<String> list=roomInfo.getEquips();
             String str="";
             for(int j=0;j<list.size();j++){
@@ -84,22 +87,18 @@ public class AiChoseRoomActivity extends Activity {
         adapter.setContain(contain);
         adapter.setNum(place);
         adapter.setEquips(tools);
-//        adapter.se(nowStatus);
+        adapter.setSimilar(sim);
         adapter.setOnItemClickLitener(new MeetingRoomInfoAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
-//                Toast.makeText(MeetingRoomInfoActivity.this,id[position]+"",Toast.LENGTH_LONG).show();
-//                Intent intent=new Intent(AiChoseRoomActivity.this,MeetingReserverActivity.class);
-//                intent.putExtra("roomid",id[position]);
-//                startActivity(intent);
+                Intent intent2=new Intent(AiChoseRoomActivity.this,AddActivity.class);
+                intent2.putExtra("roomid",id[position]);
+                intent2.putExtra("roomname",name[position]);
+                startActivityForResult(intent2,1);
+//                startActivity(intent2);
             }
         });
         meetroom_list.setAdapter(adapter);
-//        Log.w(TAG,"123214213124214");
-//        for(int i=0;i<roomInfos.size();i++){
-//            RoomInfo roomInfo=roomInfos.get(i);
-//            Log.w(TAG,"id:"+roomInfo.getMeetRoomId()+"name:"+roomInfo.getMeetRoomName());
-//        }
     }
     public void setListener(){
         back.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +107,19 @@ public class AiChoseRoomActivity extends Activity {
                 finish();
             }
         });
-
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.w(TAG,"返回值:"+resultCode);
+        switch (resultCode){
+            case 100:
+                setResult(100);
+                finish();
+                break;
+            case 500:
+                break;
+        }
     }
 
 }

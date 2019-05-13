@@ -111,7 +111,7 @@ public class AIActivity extends Activity {
                         waitingDialog.cancel();
                         Intent intent=new Intent(AIActivity.this,AiChoseRoomActivity.class);
                         intent.putExtra("roominfos",roomInfos);
-                        startActivity(intent);
+                        startActivityForResult(intent,1);
                         break;
                 }
             }
@@ -303,6 +303,19 @@ public class AIActivity extends Activity {
             }
         }
         return -1;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.w(TAG,"返回值:"+resultCode);
+        switch (resultCode){
+            case 100:
+                finish();
+                break;
+            case 500:
+                break;
+        }
     }
 
     private void showWaitingDialog() {

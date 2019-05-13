@@ -1,6 +1,7 @@
 package com.zhihui.imeeting.cloudmeeting.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -78,6 +79,7 @@ public class AddActivity extends Activity {
     private Message msg;
     private SharedPreferences sp;
     private String message;
+    private ProgressDialog waitingDialog;
     //当前时间
     private Calendar cal;
     private String current_time;
@@ -97,6 +99,7 @@ public class AddActivity extends Activity {
         setListener();
     }
     public void init(){
+        Intent intent=getIntent();
         back=findViewById(R.id.back);
         book=findViewById(R.id.book);
         topic=findViewById(R.id.topic);
@@ -114,10 +117,13 @@ public class AddActivity extends Activity {
         meeting=findViewById(R.id.meeting);
         meetingName=findViewById(R.id.meetingName);
         sp=this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        boardroomId=intent.getIntExtra("roomid",0);
+        meetingName.setText(intent.getStringExtra("roomname"));
         handler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
+                waitingDialog.cancel();
                 switch (msg.what){
                     case 404:
                         Toast.makeText(AddActivity.this,"网络错误",Toast.LENGTH_LONG).show();
@@ -126,7 +132,9 @@ public class AddActivity extends Activity {
                         Toast.makeText(AddActivity.this,message,Toast.LENGTH_LONG).show();
                         break;
                     case 200:
+
                         Toast.makeText(AddActivity.this,"预订会议成功",Toast.LENGTH_LONG).show();
+                        setResult(100);
                         finish();
                         break;
                 }
@@ -176,6 +184,7 @@ public class AddActivity extends Activity {
                 if (topic.getText()==null||content.getText()==null||member_id.length==0||boardroomId==0){
                     Toast.makeText(AddActivity.this,"请完成填写信息",Toast.LENGTH_LONG).show();
                 }else {
+                    showWaitingDialog();
                     try {
                         JSONObject jsonObject=new JSONObject();
                         jsonObject.put("beginTime",beginTime2.getText().toString());
@@ -500,5 +509,12 @@ public class AddActivity extends Activity {
 //                Log.w(TAG,"llll");
                 break;
         }
+    }
+    private void showWaitingDialog() {
+        waitingDialog= new ProgressDialog(AddActivity.this);
+        waitingDialog.setMessage("请等待...");
+        waitingDialog.setIndeterminate(true);
+        waitingDialog.setCancelable(false);
+        waitingDialog.show();
     }
 }
