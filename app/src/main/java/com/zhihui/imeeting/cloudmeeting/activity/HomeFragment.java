@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
     private String next;
     private String afterNext;
     private LinearLayout meizhou;
-    private LinearLayout kaimeng;
+    private LinearLayout shiping;
 
     private String current_time_year;
     private String current_time_month;
@@ -190,7 +190,7 @@ public class HomeFragment extends Fragment {
         myreserve=view.findViewById(R.id.myreserve);
         meetingList=view.findViewById(R.id.meetingList);
         meizhou=view.findViewById(R.id.meizhou);
-        kaimeng=view.findViewById(R.id.kaimeng);
+        shiping=view.findViewById(R.id.shiping);
         handler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -252,10 +252,10 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        kaimeng.setOnClickListener(new View.OnClickListener() {
+        shiping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getActivity(),OpenDoorActivity.class);
+                Intent intent=new Intent(getActivity(),VideoActivity.class);
                 startActivity(intent);
             }
         });

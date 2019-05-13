@@ -57,6 +57,7 @@ public class MineFragment extends Fragment {
     private LinearLayout myLeave;
     private LinearLayout sing_info;
     private LinearLayout yichang;
+    private LinearLayout kaimeng;
     View view;
     private Button logout;
     SharedPreferences sp;
@@ -122,6 +123,7 @@ public class MineFragment extends Fragment {
         change_pwd=view.findViewById(R.id.change_pwd);
         myLeave=view.findViewById(R.id.myLeave);
         sing_info=view.findViewById(R.id.sing_info);
+        kaimeng=view.findViewById(R.id.kaimeng);
         sp = this.getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         handler=new Handler(){
             @Override
@@ -164,6 +166,13 @@ public class MineFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(),FaceManagerActivity.class);
+                startActivity(intent);
+            }
+        });
+        kaimeng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),OpenDoorActivity.class);
                 startActivity(intent);
             }
         });

@@ -80,7 +80,8 @@
         <activity android:name=".activity.DaGangActivity" />
         <activity android:name=".activity.RenWuActivity" />
         <activity android:name=".activity.AIActivity" />
-        <activity android:name=".activity.AiChoseRoomActivity"></activity>
+        <activity android:name=".activity.AiChoseRoomActivity" />
+        <activity android:name=".activity.VideoActivity"></activity>
     </application>
 
 </manifest>
