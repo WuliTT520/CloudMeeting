@@ -138,4 +138,7 @@ public class MyURL {
     public String recommandMeetRoom(){
         return URL+"/meeting/recommandMeetRoom";
     }
+    public String selectMyVideoRoom(){
+        return URL+"/video/selectMyVideoRoom";
+    }
 }
