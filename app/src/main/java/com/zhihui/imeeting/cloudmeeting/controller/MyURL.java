@@ -141,4 +141,7 @@ public class MyURL {
     public String selectMyVideoRoom(){
         return URL+"/video/selectMyVideoRoom";
     }
+    public String createMeetRoom(){
+        return URL+"/video/createMeetRoom";
+    }
 }
