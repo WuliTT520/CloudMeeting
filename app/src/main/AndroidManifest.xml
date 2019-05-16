@@ -83,6 +83,7 @@
         <activity android:name=".activity.AiChoseRoomActivity" />
         <activity android:name=".activity.VideoActivity" />
         <activity android:name=".activity.JoinVideoActivity" />
+        <activity android:name=".activity.TRTCMainActivity" />
         <activity android:name=".activity.AddVideoActivity"></activity>
     </application>
 
